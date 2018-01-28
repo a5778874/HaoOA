@@ -1,12 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:textSize="25sp"
-        android:layout_width="wrap_content"
+    <include layout="@layout/mtoolbar" />
+
+    <GridLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="work"/>
+        android:columnCount="3"
+        android:padding="10dp"
+        android:rowCount="3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/_notify"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="公告通知"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/_news"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="最新新闻"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/_qingjia"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="请假申请"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/_out"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="出差申请"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/_qiandao"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="签到打卡"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/_vote"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="投票"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/_calendar"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="日程表"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/_diary"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="日记"
+            android:textSize="18sp" />
+
+           <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/_daiban"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="待办事项"
+            android:textSize="18sp" />
+
+
+    </GridLayout>
 
 </LinearLayout>

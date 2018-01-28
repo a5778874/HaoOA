@@ -8,11 +8,11 @@
 
 
     <FrameLayout
-        android:background="@android:color/white"
         android:id="@+id/tabContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="@android:color/white" />
 
 
     <android.support.v4.app.FragmentTabHost
@@ -25,6 +25,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="0" />
+
+        <!-- 加下面这个会运行报错，不加预览图又不能显示-->
+        <!--  <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />-->
+
     </android.support.v4.app.FragmentTabHost>
 
 </LinearLayout>
