@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="tabTextchecked">#38ADFF</color>
     <color name="tabTextunchecked">#636364</color>
+    <color name="windowBackground">#F6F6F6</color>
 </resources>
