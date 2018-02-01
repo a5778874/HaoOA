@@ -2,18 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/windowBackground"
     android:orientation="vertical">
 
-    <TextView
+    <com.hyphenate.easeui.widget.EaseTitleBar
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="?attr/colorPrimary"
-        android:gravity="center"
-        android:text="个人中心"
-        android:textColor="@android:color/white"
-        android:textSize="25sp" />
-
+        android:padding="10dp"
+        android:background="@color/easeTitleBarBackground"
+        app:titleBarTitle="个人中心"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"

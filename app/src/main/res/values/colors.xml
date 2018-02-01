@@ -6,4 +6,6 @@
     <color name="tabTextchecked">#38ADFF</color>
     <color name="tabTextunchecked">#636364</color>
     <color name="windowBackground">#F6F6F6</color>
+    <color name="easeTitleBarBackground">#00ACFF</color>
+
 </resources>

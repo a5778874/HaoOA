@@ -6,7 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/mtoolbar" />
+
+    <com.hyphenate.easeui.widget.EaseTitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/easeTitleBarBackground"
+        android:padding="10dp"
+        app:titleBarLeftImage="@mipmap/logo"
+        app:titleBarTitle="工作台" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,6 +24,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
             <android.support.v7.widget.GridLayout
 
                 android:layout_width="match_parent"
@@ -26,8 +34,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:drawablePadding="10dp"
-                    android:drawableTop="@mipmap/_notify"
+                    android:drawableTop="@drawable/btn_notify_selector"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="公告通知"
@@ -40,8 +49,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:drawablePadding="10dp"
-                    android:drawableTop="@mipmap/_news"
+                    android:drawableTop="@drawable/btn_news_selector"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="最新新闻"
@@ -54,8 +64,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:drawablePadding="10dp"
-                    android:drawableTop="@mipmap/_qingjia"
+                    android:drawableTop="@drawable/btn_qingjia_selector"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="请假申请"
@@ -69,8 +80,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:drawablePadding="10dp"
-                    android:drawableTop="@mipmap/_out"
+                    android:drawableTop="@drawable/btn_out_selector"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="出差申请"
@@ -83,8 +95,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:drawablePadding="10dp"
-                    android:drawableTop="@mipmap/_qiandao"
+                    android:drawableTop="@drawable/btn_qiandao_selector"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="签到打卡"
@@ -97,8 +110,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:drawablePadding="10dp"
-                    android:drawableTop="@mipmap/_vote"
+                    android:drawableTop="@drawable/btn_vote_selector"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="投票"
@@ -112,8 +126,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:drawablePadding="10dp"
-                    android:drawableTop="@mipmap/_calendar"
+                    android:drawableTop="@drawable/btn_calendar_selector"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="日程表"
@@ -126,8 +141,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:drawablePadding="10dp"
-                    android:drawableTop="@mipmap/_diary"
+                    android:drawableTop="@drawable/btn_diary_selector"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="日记"
@@ -140,8 +156,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:drawablePadding="10dp"
-                    android:drawableTop="@mipmap/_daiban"
+                    android:drawableTop="@drawable/btn_daiban_selector"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="待办事项"
@@ -157,17 +174,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="40dp"
+                android:clickable="true"
                 android:drawablePadding="10dp"
-                android:drawableTop="@mipmap/_add"
+                android:drawableTop="@drawable/btn_add_selector"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="添加更多"
-                android:textSize="18sp"
-                app:layout_column="0"
-                app:layout_columnWeight="1"
-                app:layout_row="3"
-                app:layout_rowWeight="1" />
+                android:text="添加更多" />
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>
