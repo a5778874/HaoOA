@@ -36,6 +36,13 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Mine.activity.LoginActivity">
+
+        </activity>
+
+        <activity android:name=".Mine.activity.RegisterActivity">
+
+        </activity>
         <!-- 设置环信应用的AppKey -->
         <meta-data android:name="EASEMOB_APPKEY"  android:value="1108180201178124#haooa" />
         <!-- 声明SDK所需的service SDK核心功能-->
