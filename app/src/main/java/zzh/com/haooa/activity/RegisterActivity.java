@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.widget.EaseTitleBar;
@@ -20,7 +22,9 @@ import zzh.com.haooa.bean.MessageEvent;
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.Utils.ToastUtils;
+import zzh.com.haooa.bean.UserInfoBean;
 import zzh.com.haooa.bmob.bean.User;
+import zzh.com.haooa.dao.UserInfoDAO;
 
 /**
  * Created by ZZH on 2018/2/1.
@@ -30,6 +34,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     private Button regButton;
     private EditText input_username, input_password, input_password_again;
     private EaseTitleBar easeTitleBar;
+    private ProgressBar pb;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +44,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
+
         easeTitleBar = findViewById(R.id.reg_titleBar);
         easeTitleBar.setLeftLayoutClickListener(this);
         regButton = findViewById(R.id.btn_reg_register);
@@ -46,7 +52,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         input_username = findViewById(R.id.et_reg_username);
         input_password = findViewById(R.id.et_reg_password);
         input_password_again = findViewById(R.id.et_reg_password_again);
-
+        pb = findViewById(R.id.pb);
     }
 
 
@@ -66,6 +72,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
 
     //注册
     private void registAccount() {
+        pb.setVisibility(View.VISIBLE);
         // 1 获取输入的用户名和密码
         final String registName = input_username.getText().toString();
         final String registPwd = input_password.getText().toString();
@@ -89,9 +96,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     //去环信注册
                     EMClient.getInstance().createAccount(registName, registPwd);
                     //把注册环信帐号同步到Bmob服务器
-                    User user = new User();
+                    final User user = new User();
                     user.setHxUsername(registName);
-
                     user.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, final BmobException e) {
@@ -99,29 +105,30 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        ToastUtils.showToast(RegisterActivity.this, "注册成功");
-                                        //使用eventBus发送注册的用户名密码到登录界面
-                                        EventBus.getDefault().post(new MessageEvent(registName, registPwd));
-                                        RegisterActivity.this.finish();
-                                    }
+                                            ToastUtils.showToast(RegisterActivity.this, "注册成功");
+                                            //使用eventBus发送注册的用户名密码到登录界面
+                                            EventBus.getDefault().post(new MessageEvent(registName, registPwd));
+                                            RegisterActivity.this.finish();
+                                        }
+
                                 });
-                            }else {
+                            } else {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        ToastUtils.showToast(RegisterActivity.this, "同步帐号到服务器失败" );
+                                        pb.setVisibility(View.GONE);
+                                        ToastUtils.showToast(RegisterActivity.this, "同步帐号到服务器失败," + e.getLocalizedMessage());
                                     }
                                 });
                             }
                         }
                     });
-
-
                 } catch (final HyphenateException e) {
                     e.printStackTrace();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            pb.setVisibility(View.GONE);
                             ToastUtils.showToast(RegisterActivity.this, "注册失败:" + e.getDescription());
                         }
                     });
