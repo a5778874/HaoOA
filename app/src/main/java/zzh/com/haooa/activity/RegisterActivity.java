@@ -85,6 +85,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             public void run() {
                 try {
                     EMClient.getInstance().createAccount(registName, registPwd);
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
