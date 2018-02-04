@@ -14,10 +14,13 @@ import com.hyphenate.exceptions.HyphenateException;
 
 import org.greenrobot.eventbus.EventBus;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 import zzh.com.haooa.bean.MessageEvent;
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.Utils.ToastUtils;
+import zzh.com.haooa.bmob.bean.User;
 
 /**
  * Created by ZZH on 2018/2/1.
@@ -45,7 +48,6 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         input_password_again = findViewById(R.id.et_reg_password_again);
 
     }
-
 
 
     @Override
@@ -84,17 +86,37 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             @Override
             public void run() {
                 try {
+                    //去环信注册
                     EMClient.getInstance().createAccount(registName, registPwd);
+                    //把注册环信帐号同步到Bmob服务器
+                    User user = new User();
+                    user.setHxUsername(registName);
 
-                    runOnUiThread(new Runnable() {
+                    user.save(new SaveListener<String>() {
                         @Override
-                        public void run() {
-                            ToastUtils.showToast(RegisterActivity.this, "注册成功");
-                            //使用eventBus发送注册的用户名密码到登录界面
-                            EventBus.getDefault().post(new MessageEvent(registName,registPwd));
-                            RegisterActivity.this.finish();
+                        public void done(String s, final BmobException e) {
+                            if (e == null) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ToastUtils.showToast(RegisterActivity.this, "注册成功");
+                                        //使用eventBus发送注册的用户名密码到登录界面
+                                        EventBus.getDefault().post(new MessageEvent(registName, registPwd));
+                                        RegisterActivity.this.finish();
+                                    }
+                                });
+                            }else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ToastUtils.showToast(RegisterActivity.this, "同步帐号到服务器失败" );
+                                    }
+                                });
+                            }
                         }
                     });
+
+
                 } catch (final HyphenateException e) {
                     e.printStackTrace();
                     runOnUiThread(new Runnable() {
@@ -107,5 +129,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             }
         });
 
+
     }
+
+
 }

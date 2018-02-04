@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.EaseUI;
 
+import cn.bmob.v3.Bmob;
 import zzh.com.haooa.greenDao.DaoMaster;
 import zzh.com.haooa.greenDao.DaoSession;
 
@@ -29,7 +30,11 @@ public class MyApplication extends Application {
         // 默认添加好友时，是不需要验证的。false为需要验证
         options.setAcceptInvitationAlways(false);
         EaseUI.getInstance().init(this, options);
+        //初始化GreenDAO
         initGreenDAO();
+        //初始化bmob云服务
+        Bmob.initialize(this,"b747e8fc58883e66ad8038f4df24126f");
+
     }
 
 
