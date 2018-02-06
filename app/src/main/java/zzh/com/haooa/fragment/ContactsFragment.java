@@ -7,18 +7,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hyphenate.easeui.ui.EaseContactListFragment;
+
 import zzh.com.haooa.R;
 
 /**
- * Created by Administrator on 2018/1/25.
+ * Created by ZZH on 2018/1/25.
+ * 使用EaseUI提供好的联系人列表Fragment
  */
 
-public class ContactsFragment extends Fragment{
-    @Nullable
+public class ContactsFragment extends EaseContactListFragment{
+    //初始化EaseUI的控件
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contacts,null);
-        return view;
+    protected void initView() {
+        super.initView();
+        //添加好友按钮
+        titleBar.setRightImageResource(R.mipmap.em_add);
+        titleBar.setTitle("联系人");
+        //扩展EaseUI的fragment布局
+        View v=View.inflate(getContext(),R.layout.fragment_contacts,null);
+        listView.addHeaderView(v);
+        //query是父类edittext的引用
+        query.setHint("搜索");
     }
 
+    //重写此方法用于处理逻辑业务
+    @Override
+    protected void setUpView() {
+        super.setUpView();
+    }
 }
