@@ -106,4 +106,10 @@
             android:textSize="20sp" />
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/loginPb"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 </RelativeLayout>

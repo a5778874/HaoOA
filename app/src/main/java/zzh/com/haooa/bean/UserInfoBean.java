@@ -25,7 +25,8 @@ public class UserInfoBean {
     private DepartmentBean department;//部门ID
     private String phone;//手机号
     private String mail;//邮箱
-    private Boolean isAdmin;//是否管理员
+    private String address;//住址
+    private String roleID;//角色
     private String createTime;//创建时间
     private String updateTime;//更新时间
     /** Used to resolve relations */
@@ -34,10 +35,10 @@ public class UserInfoBean {
     /** Used for active entity operations. */
     @Generated(hash = 663796412)
     private transient UserInfoBeanDao myDao;
-    @Generated(hash = 454378256)
+    @Generated(hash = 1184885910)
     public UserInfoBean(String HxUsername, String nick, String sex, String head,
-            String departmentID, String phone, String mail, Boolean isAdmin,
-            String createTime, String updateTime) {
+            String departmentID, String phone, String mail, String address,
+            String roleID, String createTime, String updateTime) {
         this.HxUsername = HxUsername;
         this.nick = nick;
         this.sex = sex;
@@ -45,7 +46,8 @@ public class UserInfoBean {
         this.departmentID = departmentID;
         this.phone = phone;
         this.mail = mail;
-        this.isAdmin = isAdmin;
+        this.address = address;
+        this.roleID = roleID;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -94,11 +96,17 @@ public class UserInfoBean {
     public void setMail(String mail) {
         this.mail = mail;
     }
-    public Boolean getIsAdmin() {
-        return this.isAdmin;
+    public String getAddress() {
+        return this.address;
     }
-    public void setIsAdmin(Boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public String getRoleID() {
+        return this.roleID;
+    }
+    public void setRoleID(String roleID) {
+        this.roleID = roleID;
     }
     public String getCreateTime() {
         return this.createTime;
@@ -180,5 +188,6 @@ public class UserInfoBean {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getUserInfoBeanDao() : null;
     }
+
     
 }

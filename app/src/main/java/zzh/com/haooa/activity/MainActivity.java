@@ -1,8 +1,10 @@
 package zzh.com.haooa.activity;
 
+import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -11,9 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import zzh.com.haooa.EventBus.LoginEvent;
+import zzh.com.haooa.EventBus.RegistEvent;
+import zzh.com.haooa.MyApplication;
 import zzh.com.haooa.fragment.ContactsFragment;
 import zzh.com.haooa.bean.TabSpecBean;
 import zzh.com.haooa.fragment.MessageFragment;
@@ -32,8 +41,24 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //增加栈记录
+        MyApplication.getInstances().activitiesSets.add(MainActivity.this);
         mInflater=LayoutInflater.from(this);
         initView();
+        initData();
+
+    }
+
+    private void initData() {
+        //注册EventBus广播，用来接收注册用户信息
+        EventBus.getDefault().register(MainActivity.this);
+    }
+
+    //接收EventBus信息
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginEvent(LoginEvent event) {
+        MineFragment.setUser(event.username,event.head);
+
     }
 
     private void initView() {
@@ -77,5 +102,14 @@ public class MainActivity extends FragmentActivity {
         img.setBackgroundResource(bean.getIcon());
         text.setText(bean.getTitle());
         return view;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //解除注册eventBus广播
+        EventBus.getDefault().unregister(MainActivity.this);
+        //移除栈记录
+        MyApplication.getInstances().activitiesSets.remove(MainActivity.this);
     }
 }

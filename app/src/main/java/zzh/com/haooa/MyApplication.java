@@ -1,10 +1,16 @@
 package zzh.com.haooa;
 
+import android.app.Activity;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.EaseUI;
+
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 import cn.bmob.v3.Bmob;
 import zzh.com.haooa.greenDao.DaoMaster;
@@ -15,6 +21,9 @@ import zzh.com.haooa.greenDao.DaoSession;
  */
 
 public class MyApplication extends Application {
+    //用于记录哪个Activity处于栈中
+    public Set<Activity> activitiesSets=new LinkedHashSet<>();
+
     private DaoMaster.DevOpenHelper mHelper;
     private SQLiteDatabase db;
     private DaoMaster mDaoMaster;
@@ -61,5 +70,7 @@ public class MyApplication extends Application {
     public SQLiteDatabase getDb() {
         return db;
     }
+
+
 
 }

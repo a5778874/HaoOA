@@ -36,9 +36,10 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
         public final static Property DepartmentID = new Property(4, String.class, "departmentID", false, "DEPARTMENT_ID");
         public final static Property Phone = new Property(5, String.class, "phone", false, "PHONE");
         public final static Property Mail = new Property(6, String.class, "mail", false, "MAIL");
-        public final static Property IsAdmin = new Property(7, Boolean.class, "isAdmin", false, "IS_ADMIN");
-        public final static Property CreateTime = new Property(8, String.class, "createTime", false, "CREATE_TIME");
-        public final static Property UpdateTime = new Property(9, String.class, "updateTime", false, "UPDATE_TIME");
+        public final static Property Address = new Property(7, String.class, "address", false, "ADDRESS");
+        public final static Property RoleID = new Property(8, String.class, "roleID", false, "ROLE_ID");
+        public final static Property CreateTime = new Property(9, String.class, "createTime", false, "CREATE_TIME");
+        public final static Property UpdateTime = new Property(10, String.class, "updateTime", false, "UPDATE_TIME");
     }
 
     private DaoSession daoSession;
@@ -64,9 +65,10 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
                 "\"DEPARTMENT_ID\" TEXT," + // 4: departmentID
                 "\"PHONE\" TEXT," + // 5: phone
                 "\"MAIL\" TEXT," + // 6: mail
-                "\"IS_ADMIN\" INTEGER," + // 7: isAdmin
-                "\"CREATE_TIME\" TEXT," + // 8: createTime
-                "\"UPDATE_TIME\" TEXT);"); // 9: updateTime
+                "\"ADDRESS\" TEXT," + // 7: address
+                "\"ROLE_ID\" TEXT," + // 8: roleID
+                "\"CREATE_TIME\" TEXT," + // 9: createTime
+                "\"UPDATE_TIME\" TEXT);"); // 10: updateTime
     }
 
     /** Drops the underlying database table. */
@@ -114,19 +116,24 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
             stmt.bindString(7, mail);
         }
  
-        Boolean isAdmin = entity.getIsAdmin();
-        if (isAdmin != null) {
-            stmt.bindLong(8, isAdmin ? 1L: 0L);
+        String address = entity.getAddress();
+        if (address != null) {
+            stmt.bindString(8, address);
+        }
+ 
+        String roleID = entity.getRoleID();
+        if (roleID != null) {
+            stmt.bindString(9, roleID);
         }
  
         String createTime = entity.getCreateTime();
         if (createTime != null) {
-            stmt.bindString(9, createTime);
+            stmt.bindString(10, createTime);
         }
  
         String updateTime = entity.getUpdateTime();
         if (updateTime != null) {
-            stmt.bindString(10, updateTime);
+            stmt.bindString(11, updateTime);
         }
     }
 
@@ -169,19 +176,24 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
             stmt.bindString(7, mail);
         }
  
-        Boolean isAdmin = entity.getIsAdmin();
-        if (isAdmin != null) {
-            stmt.bindLong(8, isAdmin ? 1L: 0L);
+        String address = entity.getAddress();
+        if (address != null) {
+            stmt.bindString(8, address);
+        }
+ 
+        String roleID = entity.getRoleID();
+        if (roleID != null) {
+            stmt.bindString(9, roleID);
         }
  
         String createTime = entity.getCreateTime();
         if (createTime != null) {
-            stmt.bindString(9, createTime);
+            stmt.bindString(10, createTime);
         }
  
         String updateTime = entity.getUpdateTime();
         if (updateTime != null) {
-            stmt.bindString(10, updateTime);
+            stmt.bindString(11, updateTime);
         }
     }
 
@@ -206,9 +218,10 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // departmentID
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // phone
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // mail
-            cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0, // isAdmin
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // createTime
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9) // updateTime
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // address
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // roleID
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // createTime
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // updateTime
         );
         return entity;
     }
@@ -222,9 +235,10 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
         entity.setDepartmentID(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setPhone(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setMail(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setIsAdmin(cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0);
-        entity.setCreateTime(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setUpdateTime(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setAddress(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setRoleID(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setCreateTime(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setUpdateTime(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
      }
     
     @Override

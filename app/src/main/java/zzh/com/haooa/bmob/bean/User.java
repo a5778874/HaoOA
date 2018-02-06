@@ -15,13 +15,13 @@ public class User extends BmobObject{
     private String departmentID;//部门ID
     private String phone;//手机号
     private String mail;//邮箱
-    private Boolean isAdmin;//是否管理员
+    private String address;//地址
+    private String roleID;//角色
 
     //设置Bmob关联表名
     public  User(){
         this.setTableName("user");
     }
-
 
     public String getHxUsername() {
         return hxUsername;
@@ -79,11 +79,19 @@ public class User extends BmobObject{
         this.mail = mail;
     }
 
-    public Boolean getAdmin() {
-        return isAdmin;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdmin(Boolean admin) {
-        isAdmin = admin;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getRoleID() {
+        return roleID;
+    }
+
+    public void setRoleID(String roleID) {
+        this.roleID = roleID;
     }
 }

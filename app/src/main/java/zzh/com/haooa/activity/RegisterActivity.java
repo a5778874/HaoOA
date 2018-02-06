@@ -18,7 +18,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
-import zzh.com.haooa.bean.MessageEvent;
+import zzh.com.haooa.EventBus.RegistEvent;
+import zzh.com.haooa.MyApplication;
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.Utils.ToastUtils;
@@ -40,6 +41,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        //增加栈记录
+        MyApplication.getInstances().activitiesSets.add(RegisterActivity.this);
         initView();
     }
 
@@ -105,11 +108,11 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                            ToastUtils.showToast(RegisterActivity.this, "注册成功");
-                                            //使用eventBus发送注册的用户名密码到登录界面
-                                            EventBus.getDefault().post(new MessageEvent(registName, registPwd));
-                                            RegisterActivity.this.finish();
-                                        }
+                                        ToastUtils.showToast(RegisterActivity.this, "注册成功");
+                                        //使用eventBus发送注册的用户名密码到登录界面
+                                        EventBus.getDefault().post(new RegistEvent(registName, registPwd));
+                                        RegisterActivity.this.finish();
+                                    }
 
                                 });
                             } else {
@@ -140,4 +143,10 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //移除栈记录
+        MyApplication.getInstances().activitiesSets.remove(RegisterActivity.this);
+    }
 }
