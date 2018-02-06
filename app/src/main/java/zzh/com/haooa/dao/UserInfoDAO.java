@@ -11,13 +11,26 @@ import zzh.com.haooa.greenDao.UserInfoBeanDao;
 
 public class UserInfoDAO {
 
+    private static UserInfoDAO userInfoDAO=new UserInfoDAO();
+
+    private UserInfoDAO(){
+
+    }
+
+    public  static UserInfoDAO init(){
+        return userInfoDAO;
+    }
+
     /**
-     * 添加一个用户
+     * 添加一个用户信息
      * @param userInfoBean
      * @return 返回所在行id
      */
-    public static long addUser(UserInfoBean userInfoBean){
-        return MyApplication.getInstances().getDaoSession().getUserInfoBeanDao().insert(userInfoBean);
+    public long addUser(UserInfoBean userInfoBean){
+        return MyApplication.getInstances().getDaoSession().getUserInfoBeanDao().insertOrReplace(userInfoBean);
     }
+
+
+
 
 }

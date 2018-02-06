@@ -24,6 +24,8 @@ import zzh.com.haooa.MyApplication;
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.Utils.ToastUtils;
+import zzh.com.haooa.bean.UserAccountTableBean;
+import zzh.com.haooa.dao.UserAccountDAO;
 
 /**
  * Created by ZZH on 2018/2/1.
@@ -109,6 +111,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                //保存登录用户信息到本地
+                                UserAccountTableBean userAccountTableBean=new UserAccountTableBean();
+                                userAccountTableBean.setHxUsername(loginName);
+                                userAccountTableBean.setIsOnline(true);
+                                UserAccountDAO.init().addUser(userAccountTableBean);
                                 loginBar.setVisibility(View.GONE);
                                 ToastUtils.showToast(LoginActivity.this, "登录成功");
                                 //使用eventBus发送注册的用户名密码到登录界面

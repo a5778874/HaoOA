@@ -11,6 +11,7 @@ import zzh.com.haooa.greenDao.UserInfoBeanDao;
 
 /**
  * Created by ZZH on 2018/2/3.
+ * 保存登录的用户信息
  */
 
 @Entity

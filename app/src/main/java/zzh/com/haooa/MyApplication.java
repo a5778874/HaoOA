@@ -2,6 +2,7 @@ package zzh.com.haooa;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hyphenate.chat.EMOptions;
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.Set;
 
 import cn.bmob.v3.Bmob;
+import zzh.com.haooa.activity.LoginActivity;
+import zzh.com.haooa.activity.MainActivity;
 import zzh.com.haooa.greenDao.DaoMaster;
 import zzh.com.haooa.greenDao.DaoSession;
 
@@ -33,6 +36,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         instances=this;
         //初始化环信Ease UI
         EMOptions options = new EMOptions();
@@ -43,7 +47,6 @@ public class MyApplication extends Application {
         initGreenDAO();
         //初始化bmob云服务
         Bmob.initialize(this,"b747e8fc58883e66ad8038f4df24126f");
-
     }
 
 

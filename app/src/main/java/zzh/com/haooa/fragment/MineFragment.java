@@ -27,6 +27,8 @@ import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.Utils.ToastUtils;
 import zzh.com.haooa.activity.LoginActivity;
 import zzh.com.haooa.R;
+import zzh.com.haooa.bean.UserAccountTableBean;
+import zzh.com.haooa.dao.UserAccountDAO;
 
 /**
  * Created by Administrator on 2018/1/25.
@@ -159,6 +161,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                //保存退出信息到本地
+                                UserAccountTableBean userAccountTableBean = new UserAccountTableBean();
+                                userAccountTableBean.setHxUsername(mine_name.getText().toString());
+                                userAccountTableBean.setIsOnline(false);
+                                UserAccountDAO.init().addUser(userAccountTableBean);
                                 // 更新ui显示
                                 civ_userhead.setImageResource(R.mipmap.man_header);
                                 mine_name.setText("请登录");
