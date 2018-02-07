@@ -33,6 +33,10 @@
             android:name=".activity.MainActivity"
             android:launchMode="singleTask">
 
+        </activity>
+
+        <activity android:name=".activity.WelcomeActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

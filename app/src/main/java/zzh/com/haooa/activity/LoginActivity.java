@@ -36,6 +36,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private TextView loginUsername, loginPassword;
     private Button bt_login;
     private ProgressBar loginBar;
+    private boolean fromWelcomeActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +60,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     private void initData() {
+        //判断是否从欢迎页面进来还是从主页面进来登录
+        Intent it=getIntent();
+         fromWelcomeActivity=it.getBooleanExtra("fromWelcomeActivity",false);
         //注册EventBus广播，用来接收注册用户信息
         EventBus.getDefault().register(LoginActivity.this);
     }
@@ -120,6 +124,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 ToastUtils.showToast(LoginActivity.this, "登录成功");
                                 //使用eventBus发送注册的用户名密码到登录界面
                                 EventBus.getDefault().post(new LoginEvent(loginName));
+                                //如果从欢迎页面进来登录的则启动主页面，否则直接解释该页面
+                                if (fromWelcomeActivity){
+                                    Intent it=new Intent(LoginActivity.this,MainActivity.class);
+                                    startActivity(it);
+                                }
                                 LoginActivity.this.finish();
                             }
                         });
