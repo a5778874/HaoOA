@@ -1,7 +1,6 @@
 package zzh.com.haooa.activity;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,11 +17,11 @@ import zzh.com.haooa.Utils.ThreadPoolUtils;
  */
 
 public class WelcomeActivity extends Activity {
-    private Handler handler=new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             // 如果当前activity已经退出，那么我就不处理handler中的消息
-            if(isFinishing()) {
+            if (isFinishing()) {
                 return;
             }
             // 判断进入主页面还是登录页面
@@ -35,14 +34,14 @@ public class WelcomeActivity extends Activity {
         ThreadPoolUtils.getInstance().getGlobalThreadPool().execute(new Runnable() {
             @Override
             public void run() {
-                if (EMClient.getInstance().isLoggedInBefore()){
+                if (EMClient.getInstance().isLoggedInBefore()) {
                     //登陆过进入主页面
                     Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     //没登陆过进入登录界面
                     Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
-                    intent.putExtra("fromWelcomeActivity",true);
+                    intent.putExtra("fromWelcomeActivity", true);
                     startActivity(intent);
                 }
                 WelcomeActivity.this.finish();
@@ -55,7 +54,7 @@ public class WelcomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         // 发送2s钟的延时消息
-        handler.sendMessageDelayed(Message.obtain(),1000);
+        handler.sendMessageDelayed(Message.obtain(), 1000);
     }
 
     @Override

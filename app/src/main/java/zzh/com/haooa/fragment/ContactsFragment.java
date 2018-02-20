@@ -1,5 +1,6 @@
 package zzh.com.haooa.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,13 +11,14 @@ import android.view.ViewGroup;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
 
 import zzh.com.haooa.R;
+import zzh.com.haooa.activity.AddContactsActivity;
 
 /**
  * Created by ZZH on 2018/1/25.
  * 使用EaseUI提供好的联系人列表Fragment
  */
 
-public class ContactsFragment extends EaseContactListFragment{
+public class ContactsFragment extends EaseContactListFragment {
     //初始化EaseUI的控件
     @Override
     protected void initView() {
@@ -35,5 +37,14 @@ public class ContactsFragment extends EaseContactListFragment{
     @Override
     protected void setUpView() {
         super.setUpView();
+        //环信EaseUI标题栏右侧按钮的点击事件
+        titleBar.setRightLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it=new Intent(getActivity(), AddContactsActivity.class);
+                startActivity(it);
+            }
+        });
     }
+
 }
