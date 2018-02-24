@@ -32,7 +32,6 @@ import zzh.com.haooa.net.bean.RespondUserBean;
 import zzh.com.haooa.net.bean.TokenBean;
 import zzh.com.haooa.net.bean.TokenRequestBodyBean;
 import zzh.com.haooa.net.interfaces.IHxUser;
-import zzh.com.haooa.net.server.HxUserServer;
 
 /**
  * Created by ZZH on 2018/2/20.
