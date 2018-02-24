@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -31,43 +33,59 @@
         android:id="@+id/et_add_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="输入查找的联系人环信ID"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"
+        android:hint="输入查找的联系人环信ID" />
 
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/rl_add"
+    <LinearLayout
+        android:id="@+id/ll_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:orientation="vertical"
+        android:visibility="visible">
 
-        <ImageView
-            android:id="@+id/iv_add_photo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@mipmap/em_default_avatar" />
+        <RelativeLayout
 
-        <TextView
-            android:id="@+id/tv_add_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/iv_add_photo"
-            android:text="名称"
-            android:textSize="20sp" />
+            android:layout_margin="10dp">
 
-        <Button
-            android:id="@+id/bt_add_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:background="@drawable/btn_login_selector"
-            android:text="添加" />
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_add_photo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/em_default_avatar" />
+
+            <TextView
+                android:id="@+id/tv_add_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/iv_add_photo"
+                android:text="名称"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/bt_add_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/btn_login_selector"
+                android:text="添加"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
 
 
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/et_add_reason"
+            android:layout_width="match_parent"
+            android:padding="20dp"
+            android:layout_height="100dp"
+            android:maxLength="100"
+            android:background="@android:drawable/alert_light_frame"
+            android:hint="输入添加信息" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -22,6 +22,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Retrofit;
+import rx.Observable;
 import zzh.com.haooa.EventBus.LoginEvent;
 import zzh.com.haooa.EventBus.RegistEvent;
 import zzh.com.haooa.MyApplication;
@@ -48,6 +50,7 @@ public class MainActivity extends FragmentActivity {
         mInflater=LayoutInflater.from(this);
         initView();
         initData();
+
 
     }
 
