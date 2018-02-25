@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
 import com.hyphenate.exceptions.HyphenateException;
@@ -33,6 +34,7 @@ import zzh.com.haooa.Utils.Constant;
 import zzh.com.haooa.Utils.SpUtils;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.activity.AddContactsActivity;
+import zzh.com.haooa.activity.ChatActivity;
 import zzh.com.haooa.activity.InviteActivity;
 import zzh.com.haooa.bean.UserContactsTableBean;
 import zzh.com.haooa.dao.UserContactsDAO;
@@ -109,6 +111,23 @@ public class ContactsFragment extends EaseContactListFragment {
         iv_contact_red = v.findViewById(R.id.iv_contact_red);
         // 获取邀请信息条目的对象
         ll_contact_invite =v.findViewById(R.id.ll_contact_invite);
+        // 设置listview会话条目的点击事件
+        setContactListItemClickListener(new EaseContactListItemClickListener() {
+            @Override
+            public void onListItemClicked(EaseUser user) {
+
+                if (user == null) {
+                    return;
+                }
+
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+
+                // 传递参数
+                intent.putExtra(EaseConstant.EXTRA_USER_ID, user.getUsername());
+
+                startActivity(intent);
+            }
+        });
     }
 
     //2.重写此方法用于处理逻辑业务
