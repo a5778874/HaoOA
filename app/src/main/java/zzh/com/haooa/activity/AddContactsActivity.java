@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,13 +81,19 @@ public class AddContactsActivity extends Activity implements View.OnClickListene
         tv_addName = findViewById(R.id.tv_add_name);
         ll_add = findViewById(R.id.ll_add);
         bt_add = findViewById(R.id.bt_add_add);
+        bt_add.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_add_add:
-                addUser();
+                String addReason = et_addReason.getText().toString();
+
+                if (TextUtils.isEmpty(addReason))
+                    addReason = "很高兴认识你，加个好友吧！";
+
+                addUser(tv_addName.getText().toString(), addReason);
                 break;
             case R.id.tv_add_find:
                 String user = et_searchUser.getText().toString();
@@ -137,8 +147,7 @@ public class AddContactsActivity extends Activity implements View.OnClickListene
                             ll_add.setVisibility(View.VISIBLE);
                         } else {
                             ToastUtils.showToast(AddContactsActivity.this, "用户不存在");
-                            if (ll_add.getVisibility() != View.VISIBLE)
-                                ll_add.setVisibility(View.GONE);
+                            ll_add.setVisibility(View.GONE);
                         }
 
                     }
@@ -148,6 +157,32 @@ public class AddContactsActivity extends Activity implements View.OnClickListene
 
 
     //添加联系人
-    private void addUser() {
+    private void addUser(final String user, final String addReason) {
+
+        ThreadPoolUtils.getInstance().getGlobalThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //向环信服务器发送好友邀请
+                    EMClient.getInstance().contactManager().addContact(user, addReason);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtils.showToast(AddContactsActivity.this, "发送添加好友邀请成功");
+                        }
+                    });
+                } catch (final HyphenateException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtils.showToast(AddContactsActivity.this, "发送添加好友邀请失败" + e.toString());
+                        }
+                    });
+                }
+
+            }
+        });
+
     }
 }

@@ -47,6 +47,8 @@ public class MyApplication extends Application {
         initGreenDAO();
         //初始化bmob云服务
         Bmob.initialize(this,"b747e8fc58883e66ad8038f4df24126f");
+        //初始化全局监听环信消息变化
+        EventListener eventListener=new EventListener(this);
     }
 
 

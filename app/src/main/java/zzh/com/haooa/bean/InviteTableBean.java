@@ -16,15 +16,18 @@ public class InviteTableBean {
     private String nick;// 用户的名称
     private String group_name;// 群组名称
     private String group_hxid;// 群组环信id
+    private String group_invite_user;//群邀请人
     private String reason;// 邀请的原因
-    private String status;// 邀请的状态
-    @Generated(hash = 1592776173)
+    private int status;// 邀请的状态
+    @Generated(hash = 2019163445)
     public InviteTableBean(String user_hxUsername, String nick, String group_name,
-            String group_hxid, String reason, String status) {
+            String group_hxid, String group_invite_user, String reason,
+            int status) {
         this.user_hxUsername = user_hxUsername;
         this.nick = nick;
         this.group_name = group_name;
         this.group_hxid = group_hxid;
+        this.group_invite_user = group_invite_user;
         this.reason = reason;
         this.status = status;
     }
@@ -61,10 +64,17 @@ public class InviteTableBean {
     public void setReason(String reason) {
         this.reason = reason;
     }
-    public String getStatus() {
+    public int getStatus() {
         return this.status;
     }
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
+    public String getGroup_invite_user() {
+        return this.group_invite_user;
+    }
+    public void setGroup_invite_user(String group_invite_user) {
+        this.group_invite_user = group_invite_user;
+    }
+
 }

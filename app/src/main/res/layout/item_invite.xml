@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+
+            android:id="@+id/iv_invite_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/em_default_avatar" />
+
+        <TextView
+            android:id="@+id/tv_invite_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_invite_head"
+            android:text="用户名"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/bt_reject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_login_selector"
+            android:textSize="18sp"
+            android:text="拒绝"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/bt_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/bt_reject"
+            android:textSize="18sp"
+            android:background="@drawable/btn_login_selector"
+            android:text="同意"
+            android:textColor="@android:color/white" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_invite_reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="添加原因"
+        android:textSize="18sp" />
+
+</LinearLayout>

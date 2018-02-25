@@ -54,6 +54,9 @@
         <activity android:name=".activity.AddContactsActivity">
 
         </activity>
+        <activity android:name=".activity.InviteActivity">
+
+        </activity>
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"

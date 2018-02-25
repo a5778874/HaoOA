@@ -28,8 +28,9 @@ public class InviteTableBeanDao extends AbstractDao<InviteTableBean, String> {
         public final static Property Nick = new Property(1, String.class, "nick", false, "NICK");
         public final static Property Group_name = new Property(2, String.class, "group_name", false, "GROUP_NAME");
         public final static Property Group_hxid = new Property(3, String.class, "group_hxid", false, "GROUP_HXID");
-        public final static Property Reason = new Property(4, String.class, "reason", false, "REASON");
-        public final static Property Status = new Property(5, String.class, "status", false, "STATUS");
+        public final static Property Group_invite_user = new Property(4, String.class, "group_invite_user", false, "GROUP_INVITE_USER");
+        public final static Property Reason = new Property(5, String.class, "reason", false, "REASON");
+        public final static Property Status = new Property(6, int.class, "status", false, "STATUS");
     }
 
 
@@ -49,8 +50,9 @@ public class InviteTableBeanDao extends AbstractDao<InviteTableBean, String> {
                 "\"NICK\" TEXT," + // 1: nick
                 "\"GROUP_NAME\" TEXT," + // 2: group_name
                 "\"GROUP_HXID\" TEXT," + // 3: group_hxid
-                "\"REASON\" TEXT," + // 4: reason
-                "\"STATUS\" TEXT);"); // 5: status
+                "\"GROUP_INVITE_USER\" TEXT," + // 4: group_invite_user
+                "\"REASON\" TEXT," + // 5: reason
+                "\"STATUS\" INTEGER NOT NULL );"); // 6: status
     }
 
     /** Drops the underlying database table. */
@@ -83,15 +85,16 @@ public class InviteTableBeanDao extends AbstractDao<InviteTableBean, String> {
             stmt.bindString(4, group_hxid);
         }
  
-        String reason = entity.getReason();
-        if (reason != null) {
-            stmt.bindString(5, reason);
+        String group_invite_user = entity.getGroup_invite_user();
+        if (group_invite_user != null) {
+            stmt.bindString(5, group_invite_user);
         }
  
-        String status = entity.getStatus();
-        if (status != null) {
-            stmt.bindString(6, status);
+        String reason = entity.getReason();
+        if (reason != null) {
+            stmt.bindString(6, reason);
         }
+        stmt.bindLong(7, entity.getStatus());
     }
 
     @Override
@@ -118,15 +121,16 @@ public class InviteTableBeanDao extends AbstractDao<InviteTableBean, String> {
             stmt.bindString(4, group_hxid);
         }
  
-        String reason = entity.getReason();
-        if (reason != null) {
-            stmt.bindString(5, reason);
+        String group_invite_user = entity.getGroup_invite_user();
+        if (group_invite_user != null) {
+            stmt.bindString(5, group_invite_user);
         }
  
-        String status = entity.getStatus();
-        if (status != null) {
-            stmt.bindString(6, status);
+        String reason = entity.getReason();
+        if (reason != null) {
+            stmt.bindString(6, reason);
         }
+        stmt.bindLong(7, entity.getStatus());
     }
 
     @Override
@@ -141,8 +145,9 @@ public class InviteTableBeanDao extends AbstractDao<InviteTableBean, String> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // nick
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // group_name
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // group_hxid
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // reason
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // status
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // group_invite_user
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // reason
+            cursor.getInt(offset + 6) // status
         );
         return entity;
     }
@@ -153,8 +158,9 @@ public class InviteTableBeanDao extends AbstractDao<InviteTableBean, String> {
         entity.setNick(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setGroup_name(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setGroup_hxid(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setReason(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setStatus(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setGroup_invite_user(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setReason(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setStatus(cursor.getInt(offset + 6));
      }
     
     @Override
