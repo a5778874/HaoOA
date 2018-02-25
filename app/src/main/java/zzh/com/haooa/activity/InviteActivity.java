@@ -56,7 +56,8 @@ public class InviteActivity extends Activity {
                         InviteTableBean inviteTableBean = new InviteTableBean();
                         inviteTableBean.setUser_hxUsername(invationInfo.getUser_hxUsername());
                         inviteTableBean.setReason(invationInfo.getReason());
-                        inviteTableBean.setStatus(invationInfo.getStatus());
+                        //把邀请状态改为同意邀请
+                        inviteTableBean.setStatus(Constant.InvitationStatus.INVITE_ACCEPT.ordinal());
                         InviteTableDAO.init().updateInvite(inviteTableBean);
 
                         runOnUiThread(new Runnable() {

@@ -22,6 +22,7 @@ import zzh.com.haooa.bean.InviteTableBean;
  */
 // 邀请信息列表页面的适配器
 public class InviteAdapter extends BaseAdapter {
+    private String TAG="TAG";
     private Context mContext;
     private List<InviteTableBean> mInviteTableBeans = new ArrayList<>();
     private OnInviteListener mOnInviteListener;
@@ -86,17 +87,17 @@ public class InviteAdapter extends BaseAdapter {
 
         // 3 显示当前item数据
         String user = inviteTableBean.getUser_hxUsername();
-
+        Log.d(TAG, "adapter getView: "+user);
         if (user != null) {// 联系人
             // 名称的展示
             hodler.name.setText(user);
 
             hodler.accept.setVisibility(View.GONE);
             hodler.reject.setVisibility(View.GONE);
-
+            Log.d(TAG, "adapter status: "+inviteTableBean.getStatus());
             // 原因
             if (inviteTableBean.getStatus() == Constant.InvitationStatus.NEW_INVITE.ordinal()) {// 新的邀请
-
+                Log.d(TAG, "adapter  新的邀请 ");
                 if (inviteTableBean.getReason() == null) {
                     hodler.reason.setText("对方请求备注：添加好友");
                 } else {
@@ -107,13 +108,14 @@ public class InviteAdapter extends BaseAdapter {
                 hodler.reject.setVisibility(View.VISIBLE);
 
             } else if (inviteTableBean.getStatus() == Constant.InvitationStatus.INVITE_ACCEPT.ordinal()) {// 接受邀请
-
+                Log.d(TAG, "adapter  接受邀请 ");
                 if (inviteTableBean.getReason() == null) {
                     hodler.reason.setText("接受邀请");
                 } else {
                     hodler.reason.setText(inviteTableBean.getReason());
                 }
             } else if (inviteTableBean.getStatus() == Constant.InvitationStatus.INVITE_ACCEPT_BY_PEER.ordinal()) {// 邀请被接受
+                hodler.reason.setText("邀请被接受");
                 if (inviteTableBean.getReason() == null) {
                     hodler.reason.setText("邀请被接受");
                 } else {
