@@ -1,5 +1,6 @@
 package zzh.com.haooa.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import zzh.com.haooa.EventBus.LoginEvent;
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ToastUtils;
 import zzh.com.haooa.activity.MainActivity;
+import zzh.com.haooa.activity.newsActivity.NewsActivity;
 
 /**
  * Created by ZZH on 2018/1/25.
@@ -74,7 +76,8 @@ public class WorkFragment extends Fragment implements View.OnClickListener{
                 ToastUtils.showToast(getActivity(),"此功能待开发！");
                 break;
             case R.id.tv_news:
-                ToastUtils.showToast(getActivity(),"此功能待开发！");
+                //跳转到新闻界面
+                gotoNewsActivity();
                 break;
             case R.id.tv_leave:
                 ToastUtils.showToast(getActivity(),"此功能待开发！");
@@ -102,5 +105,9 @@ public class WorkFragment extends Fragment implements View.OnClickListener{
                 break;
         }
 
+    }
+
+    private void gotoNewsActivity() {
+        startActivity(new Intent(getActivity(), NewsActivity.class));
     }
 }

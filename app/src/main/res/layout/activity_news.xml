@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hyphenate.easeui.widget.EaseTitleBar
+        android:id="@+id/titlebar_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleBarRightImage="@mipmap/em_add"
+        app:titleBarTitle="最新新闻" />
+
+    <TextView
+        android:id="@+id/tv_nonews"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="暂无新闻"
+        android:textSize="30sp"
+        android:visibility="visible" />
+
+    <ListView
+        android:id="@+id/lv_news_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+
+</LinearLayout>
