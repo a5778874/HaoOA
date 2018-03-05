@@ -101,6 +101,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     //把注册环信帐号同步到Bmob服务器
                     final User user = new User();
                     user.setHxUsername(registName);
+                    //默认注册的为普通用户
+                    user.setRole(0);
                     user.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, final BmobException e) {

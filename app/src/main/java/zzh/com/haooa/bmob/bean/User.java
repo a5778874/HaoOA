@@ -16,7 +16,7 @@ public class User extends BmobObject{
     private String phone;//手机号
     private String mail;//邮箱
     private String address;//地址
-    private String roleID;//角色
+    private int role;//角色
 
     //设置Bmob关联表名
     public  User(){
@@ -87,11 +87,11 @@ public class User extends BmobObject{
         this.address = address;
     }
 
-    public String getRoleID() {
-        return roleID;
+    public int getRole() {
+        return role;
     }
 
-    public void setRoleID(String roleID) {
-        this.roleID = roleID;
+    public void setRole(int role) {
+        this.role = role;
     }
 }

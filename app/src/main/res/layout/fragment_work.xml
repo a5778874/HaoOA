@@ -32,6 +32,7 @@
                 android:padding="10dp">
 
                 <TextView
+                    android:id="@+id/tv_notification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -47,6 +48,7 @@
                     app:layout_rowWeight="1" />
 
                 <TextView
+                    android:id="@+id/tv_news"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -62,6 +64,7 @@
                     app:layout_rowWeight="1" />
 
                 <TextView
+                    android:id="@+id/tv_leave"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -78,6 +81,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_goout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -94,6 +98,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_vote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -109,6 +114,7 @@
                     app:layout_rowWeight="1" />
 
                 <TextView
+                    android:id="@+id/tv_todo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -124,6 +130,7 @@
                     app:layout_rowWeight="1" />
 
                 <TextView
+                    android:id="@+id/tv_schedule"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -139,6 +146,7 @@
                     app:layout_rowWeight="1" />
 
                 <TextView
+                    android:id="@+id/tv_diary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -155,6 +163,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_sign"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -173,6 +182,7 @@
 
 
             <TextView
+                android:id="@+id/tv_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"

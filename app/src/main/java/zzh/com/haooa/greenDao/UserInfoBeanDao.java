@@ -37,7 +37,7 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
         public final static Property Phone = new Property(5, String.class, "phone", false, "PHONE");
         public final static Property Mail = new Property(6, String.class, "mail", false, "MAIL");
         public final static Property Address = new Property(7, String.class, "address", false, "ADDRESS");
-        public final static Property RoleID = new Property(8, String.class, "roleID", false, "ROLE_ID");
+        public final static Property Role = new Property(8, int.class, "role", false, "ROLE");
         public final static Property CreateTime = new Property(9, String.class, "createTime", false, "CREATE_TIME");
         public final static Property UpdateTime = new Property(10, String.class, "updateTime", false, "UPDATE_TIME");
     }
@@ -66,7 +66,7 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
                 "\"PHONE\" TEXT," + // 5: phone
                 "\"MAIL\" TEXT," + // 6: mail
                 "\"ADDRESS\" TEXT," + // 7: address
-                "\"ROLE_ID\" TEXT," + // 8: roleID
+                "\"ROLE\" INTEGER NOT NULL ," + // 8: role
                 "\"CREATE_TIME\" TEXT," + // 9: createTime
                 "\"UPDATE_TIME\" TEXT);"); // 10: updateTime
     }
@@ -120,11 +120,7 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
         if (address != null) {
             stmt.bindString(8, address);
         }
- 
-        String roleID = entity.getRoleID();
-        if (roleID != null) {
-            stmt.bindString(9, roleID);
-        }
+        stmt.bindLong(9, entity.getRole());
  
         String createTime = entity.getCreateTime();
         if (createTime != null) {
@@ -180,11 +176,7 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
         if (address != null) {
             stmt.bindString(8, address);
         }
- 
-        String roleID = entity.getRoleID();
-        if (roleID != null) {
-            stmt.bindString(9, roleID);
-        }
+        stmt.bindLong(9, entity.getRole());
  
         String createTime = entity.getCreateTime();
         if (createTime != null) {
@@ -219,7 +211,7 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // phone
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // mail
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // address
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // roleID
+            cursor.getInt(offset + 8), // role
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // createTime
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // updateTime
         );
@@ -236,7 +228,7 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, String> {
         entity.setPhone(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setMail(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setAddress(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setRoleID(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setRole(cursor.getInt(offset + 8));
         entity.setCreateTime(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setUpdateTime(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
      }

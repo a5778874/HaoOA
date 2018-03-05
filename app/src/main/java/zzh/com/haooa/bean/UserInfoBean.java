@@ -27,7 +27,7 @@ public class UserInfoBean {
     private String phone;//手机号
     private String mail;//邮箱
     private String address;//住址
-    private String roleID;//角色
+    private int role;//角色
     private String createTime;//创建时间
     private String updateTime;//更新时间
     /** Used to resolve relations */
@@ -36,10 +36,10 @@ public class UserInfoBean {
     /** Used for active entity operations. */
     @Generated(hash = 663796412)
     private transient UserInfoBeanDao myDao;
-    @Generated(hash = 1184885910)
+    @Generated(hash = 1330787407)
     public UserInfoBean(String HxUsername, String nick, String sex, String head,
             String departmentID, String phone, String mail, String address,
-            String roleID, String createTime, String updateTime) {
+            int role, String createTime, String updateTime) {
         this.HxUsername = HxUsername;
         this.nick = nick;
         this.sex = sex;
@@ -48,7 +48,7 @@ public class UserInfoBean {
         this.phone = phone;
         this.mail = mail;
         this.address = address;
-        this.roleID = roleID;
+        this.role = role;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -103,11 +103,11 @@ public class UserInfoBean {
     public void setAddress(String address) {
         this.address = address;
     }
-    public String getRoleID() {
-        return this.roleID;
+    public int getRole() {
+        return this.role;
     }
-    public void setRoleID(String roleID) {
-        this.roleID = roleID;
+    public void setRole(int role) {
+        this.role = role;
     }
     public String getCreateTime() {
         return this.createTime;
@@ -189,6 +189,7 @@ public class UserInfoBean {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getUserInfoBeanDao() : null;
     }
+
 
     
 }
