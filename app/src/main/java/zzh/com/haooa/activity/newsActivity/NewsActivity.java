@@ -25,6 +25,8 @@ import cn.bmob.v3.listener.FindListener;
 
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
+import zzh.com.haooa.Utils.ToastUtils;
+import zzh.com.haooa.activity.ShowActivity;
 import zzh.com.haooa.adapter.NewsItemAdapter;
 import zzh.com.haooa.bmob.bean.news;
 
@@ -37,7 +39,8 @@ public class NewsActivity extends Activity {
     private EaseTitleBar newsTitleBar;
     private RecyclerView news_itemview;
     private NewsItemAdapter newsItemAdapter;
-    private List<news> newsList = new ArrayList<>();
+    private List<news> newsList = new ArrayList<>();  //保存服务器返回的新闻列表
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -48,7 +51,17 @@ public class NewsActivity extends Activity {
                 newsItemAdapter = new NewsItemAdapter(NewsActivity.this, newsList);
                 news_itemview.setAdapter(newsItemAdapter);
                 news_itemview.setLayoutManager(new LinearLayoutManager(NewsActivity.this, LinearLayoutManager.VERTICAL, false));
-                news_itemview.addItemDecoration(new DividerItemDecoration(NewsActivity.this,DividerItemDecoration.VERTICAL));
+                news_itemview.addItemDecoration(new DividerItemDecoration(NewsActivity.this, DividerItemDecoration.VERTICAL));
+                newsItemAdapter.setmItemClickListener(new NewsItemAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        news newsDetails = newsList.get(position);
+                        //跳转到详情页
+                        Intent it = new Intent(NewsActivity.this, ShowActivity.class);
+                        it.putExtra("news", newsDetails);
+                        startActivity(it);
+                    }
+                });
                 Log.d("TAG", "handleMessage: " + newsList.size());
             } else {
                 Log.d("TAG", "handleMessage: " + msg.obj.toString());
@@ -61,8 +74,14 @@ public class NewsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         initView();
-        initDatas();
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initDatas();
     }
 
     private void initDatas() {
@@ -104,6 +123,8 @@ public class NewsActivity extends Activity {
         newsTitleBar.setRightLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent it = new Intent(NewsActivity.this, AddNewsActivity.class);
+                it.putExtra("NewsStatus", AddNewsActivity.STATUS_ADD_NEWS);
                 //跳转到新建新闻页面
                 startActivity(new Intent(NewsActivity.this, AddNewsActivity.class));
             }
@@ -115,6 +136,7 @@ public class NewsActivity extends Activity {
         refreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
+                initNewsDatas();
                 //刷新完成
                 refreshLayout.finishRefresh();
             }

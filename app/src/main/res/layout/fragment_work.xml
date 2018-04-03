@@ -178,20 +178,24 @@
                     app:layout_row="2"
                     app:layout_rowWeight="1" />
 
+                <TextView
+                    android:id="@+id/tv_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:drawablePadding="10dp"
+                    android:drawableTop="@drawable/btn_add_selector"
+                    android:gravity="center"
+                    android:text="添加更多"
+                    android:textSize="18sp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="3"
+                    app:layout_rowWeight="1" />
+
             </android.support.v7.widget.GridLayout>
 
 
-            <TextView
-                android:id="@+id/tv_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:clickable="true"
-                android:drawablePadding="10dp"
-                android:drawableTop="@drawable/btn_add_selector"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="添加更多" />
         </LinearLayout>
     </ScrollView>
 

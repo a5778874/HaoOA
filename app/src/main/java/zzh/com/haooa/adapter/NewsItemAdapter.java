@@ -17,7 +17,7 @@ import zzh.com.haooa.bmob.bean.news;
  * Created by ZZH on 2018/3/5.
  */
 
-public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.MyHolder> {
+public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.MyHolder> implements View.OnClickListener{
     private List<news> newsList;
     private Context mContext;
 
@@ -30,11 +30,13 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.MyHold
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.item_news, null);
+        v.setOnClickListener(this);
         return new MyHolder(v);
     }
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
+        holder.itemView.setTag(position);
         holder.newsTitleItem.setText(newsList.get(position).getNews_title()+" ");
         holder.newsTimeItem.setText(newsList.get(position).getCreatedAt()+" ");
     }
@@ -44,6 +46,14 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.MyHold
         return newsList.size();
     }
 
+    @Override
+    public void onClick(View v) {
+        if (mItemClickListener!=null){
+            mItemClickListener.onItemClick((Integer) v.getTag());
+        }
+    }
+
+
     public class MyHolder extends RecyclerView.ViewHolder {
         private TextView newsTitleItem,newsTimeItem;
 
@@ -52,5 +62,16 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.MyHold
             newsTitleItem=itemView.findViewById(R.id.tv_newstitle_item);
             newsTimeItem=itemView.findViewById(R.id.tv_newstime_item);
         }
+    }
+
+    //定义一个外部使用的接口
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    private OnItemClickListener mItemClickListener;
+
+    public void setmItemClickListener(OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
     }
 }

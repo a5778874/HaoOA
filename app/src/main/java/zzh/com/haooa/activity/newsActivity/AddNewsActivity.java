@@ -1,6 +1,7 @@
 package zzh.com.haooa.activity.newsActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.hyphenate.chat.EMClient;
+
+import java.io.Serializable;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -24,12 +27,25 @@ import zzh.com.haooa.bmob.bean.news;
 public class AddNewsActivity extends Activity implements View.OnClickListener {
     private EditText et_newsTitle, et_newsText;
     private Button bt_editNews, bt_deleteNews, bt_publicNews;
+    public static final int STATUS_EDIT_NEWS = 200;  //编辑状态
+    public static final int STATUS_ADD_NEWS = 201;   //新建状态
+    private int editStatus = STATUS_ADD_NEWS;//编辑新闻的状态，新建状态还是编辑状态。
+    private news newsDetails;//传递过来的新闻信息
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addnews);
         initView();
+        initData();
+    }
+
+    private void initData() {
+        Intent it = getIntent();
+        editStatus = it.getIntExtra("NewsStatus", STATUS_ADD_NEWS);
+        if (editStatus == STATUS_ADD_NEWS) {
+
+        }
     }
 
     private void initView() {
@@ -80,6 +96,7 @@ public class AddNewsActivity extends Activity implements View.OnClickListener {
                         public void done(String objectId, BmobException e) {
                             if (e == null) {
                                 ToastUtils.showToast(AddNewsActivity.this, "发布成功");
+                                AddNewsActivity.this.finish();
                             } else {
                                 ToastUtils.showToast(AddNewsActivity.this, "发布失败");
                             }
