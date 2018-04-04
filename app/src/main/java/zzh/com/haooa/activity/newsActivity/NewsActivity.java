@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
@@ -39,6 +40,7 @@ public class NewsActivity extends Activity {
     private EaseTitleBar newsTitleBar;
     private RecyclerView news_itemview;
     private NewsItemAdapter newsItemAdapter;
+    private ProgressBar pb_newslists;
     private List<news> newsList = new ArrayList<>();  //保存服务器返回的新闻列表
 
     private Handler handler = new Handler() {
@@ -81,6 +83,7 @@ public class NewsActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        pb_newslists.setVisibility(View.VISIBLE);
         initDatas();
     }
 
@@ -104,12 +107,25 @@ public class NewsActivity extends Activity {
                             message.what = 1;
                             message.obj = list;
                             handler.sendMessage(message);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    pb_newslists.setVisibility(View.GONE);
+                                }
+                            });
+
                         } else {
                             //获取失败0
                             Message message = new Message();
                             message.what = 0;
                             message.obj = e.toString();
                             handler.sendMessage(message);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    pb_newslists.setVisibility(View.GONE);
+                                }
+                            });
                         }
                     }
                 });
@@ -119,6 +135,7 @@ public class NewsActivity extends Activity {
     }
 
     private void initView() {
+        pb_newslists = findViewById(R.id.pb_newslists);
         newsTitleBar = findViewById(R.id.titlebar_news);
         newsTitleBar.setRightLayoutClickListener(new View.OnClickListener() {
             @Override

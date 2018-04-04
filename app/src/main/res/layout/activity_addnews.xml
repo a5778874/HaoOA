@@ -50,13 +50,13 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/bt_editnews"
+                android:id="@+id/bt_save_news"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_login_selector"
-                android:text="编辑"
+                android:text="保存"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
@@ -67,7 +67,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_login_selector"
-                android:text="删除"
+                android:text="清空"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
