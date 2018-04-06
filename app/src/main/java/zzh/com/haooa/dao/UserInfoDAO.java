@@ -1,5 +1,7 @@
 package zzh.com.haooa.dao;
 
+import java.util.List;
+
 import zzh.com.haooa.MyApplication;
 import zzh.com.haooa.bean.UserInfoBean;
 import zzh.com.haooa.greenDao.UserInfoBeanDao;
@@ -30,7 +32,19 @@ public class UserInfoDAO {
         return MyApplication.getInstances().getDaoSession().getUserInfoBeanDao().insertOrReplace(userInfoBean);
     }
 
+    /**
+     * 删除全部记录
+     */
+    public void deleteAll(){
+        MyApplication.getInstances().getDaoSession().getUserInfoBeanDao().deleteAll();
+    }
 
-
+    /**
+     * 查询全部
+     * @return
+     */
+    public  List<UserInfoBean> getUser(){
+      return MyApplication.getInstances().getDaoSession().getUserInfoBeanDao().loadAll();
+    }
 
 }

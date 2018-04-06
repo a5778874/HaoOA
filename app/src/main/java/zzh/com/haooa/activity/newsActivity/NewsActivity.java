@@ -26,8 +26,6 @@ import cn.bmob.v3.listener.FindListener;
 
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
-import zzh.com.haooa.Utils.ToastUtils;
-import zzh.com.haooa.activity.ShowActivity;
 import zzh.com.haooa.adapter.NewsItemAdapter;
 import zzh.com.haooa.bmob.bean.news;
 
@@ -59,7 +57,7 @@ public class NewsActivity extends Activity {
                     public void onItemClick(int position) {
                         news newsDetails = newsList.get(position);
                         //跳转到详情页
-                        Intent it = new Intent(NewsActivity.this, ShowActivity.class);
+                        Intent it = new Intent(NewsActivity.this, ShowNewsActivity.class);
                         it.putExtra("news", newsDetails);
                         startActivity(it);
                     }

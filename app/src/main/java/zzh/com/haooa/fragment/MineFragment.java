@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.Utils.ToastUtils;
 import zzh.com.haooa.activity.LoginActivity;
 import zzh.com.haooa.R;
+import zzh.com.haooa.activity.UserInfoActivity;
 import zzh.com.haooa.bean.UserAccountTableBean;
 import zzh.com.haooa.dao.UserAccountDAO;
 
@@ -38,6 +40,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private static CircleImageView civ_userhead;
     private static TextView mine_name;
     private Button bt_exitLogin;
+    private RelativeLayout rl_mine_userinfo;
     private View view = null;
 
 
@@ -67,6 +70,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         if (view == null) {
             return;
         }
+
+        rl_mine_userinfo=view.findViewById(R.id.rl_mine_userinfo);
+        rl_mine_userinfo.setOnClickListener(this);
         mine_name = view.findViewById(R.id.mine_name);
         civ_userhead = view.findViewById(R.id.civ_userhead);
         civ_userhead.setOnClickListener(MineFragment.this);
@@ -116,10 +122,20 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 }
 
                 break;
+
+            case R.id.rl_mine_userinfo:
+                //跳转到个人资料页面
+                goToUserinfoActivity();
+                break;
+
             case R.id.mine_exit_login:
                 exitLogin();
                 break;
         }
+    }
+
+    private void goToUserinfoActivity() {
+        startActivity(new Intent(getActivity(), UserInfoActivity.class));
     }
 
     @Override

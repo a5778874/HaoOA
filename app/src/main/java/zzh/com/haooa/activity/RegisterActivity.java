@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,9 +22,7 @@ import zzh.com.haooa.MyApplication;
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.Utils.ToastUtils;
-import zzh.com.haooa.bean.UserInfoBean;
-import zzh.com.haooa.bmob.bean.User;
-import zzh.com.haooa.dao.UserInfoDAO;
+import zzh.com.haooa.bmob.bean.user;
 
 /**
  * Created by ZZH on 2018/2/1.
@@ -99,11 +96,13 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     //去环信注册
                     EMClient.getInstance().createAccount(registName, registPwd);
                     //把注册环信帐号同步到Bmob服务器
-                    final User user = new User();
-                    user.setHxUsername(registName);
+                    final user myUser = new user();
+                    myUser.setHxUsername(registName);
+                    //DepartmentID 1000代表 暂无部门
+                    myUser.setDepartmentID("1000");
                     //默认注册的为普通用户
-                    user.setRole(0);
-                    user.save(new SaveListener<String>() {
+                    myUser.setRole(0);
+                    myUser.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, final BmobException e) {
                             if (e == null) {

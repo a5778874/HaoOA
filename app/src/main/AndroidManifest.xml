@@ -68,7 +68,15 @@
 
         </activity>
 
-        <activity android:name=".activity.ShowActivity">
+        <activity android:name=".activity.newsActivity.ShowNewsActivity">
+
+        </activity>
+
+        <activity android:name=".activity.notify.NotifyActivity">
+
+        </activity>
+
+        <activity android:name=".activity.UserInfoActivity">
 
         </activity>
         <!-- 设置环信应用的AppKey -->

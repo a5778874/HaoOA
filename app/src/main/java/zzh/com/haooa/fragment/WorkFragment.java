@@ -18,6 +18,7 @@ import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ToastUtils;
 import zzh.com.haooa.activity.MainActivity;
 import zzh.com.haooa.activity.newsActivity.NewsActivity;
+import zzh.com.haooa.activity.notify.NotifyActivity;
 
 /**
  * Created by ZZH on 2018/1/25.
@@ -73,7 +74,7 @@ public class WorkFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_notification:
-                ToastUtils.showToast(getActivity(),"此功能待开发！");
+               gotoNotifyActivity();
                 break;
             case R.id.tv_news:
                 //跳转到新闻界面
@@ -105,6 +106,10 @@ public class WorkFragment extends Fragment implements View.OnClickListener{
                 break;
         }
 
+    }
+
+    private void gotoNotifyActivity() {
+        startActivity(new Intent(getActivity(), NotifyActivity.class));
     }
 
     private void gotoNewsActivity() {
