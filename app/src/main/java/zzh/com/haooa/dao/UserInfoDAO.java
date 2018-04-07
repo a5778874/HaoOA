@@ -13,38 +13,45 @@ import zzh.com.haooa.greenDao.UserInfoBeanDao;
 
 public class UserInfoDAO {
 
-    private static UserInfoDAO userInfoDAO=new UserInfoDAO();
+    private static UserInfoDAO userInfoDAO = new UserInfoDAO();
 
-    private UserInfoDAO(){
+    private UserInfoDAO() {
 
     }
 
-    public  static UserInfoDAO init(){
+    public static UserInfoDAO init() {
         return userInfoDAO;
     }
 
     /**
      * 添加一个用户信息
+     *
      * @param userInfoBean
      * @return 返回所在行id
      */
-    public long addUser(UserInfoBean userInfoBean){
+    public long addUser(UserInfoBean userInfoBean) {
         return MyApplication.getInstances().getDaoSession().getUserInfoBeanDao().insertOrReplace(userInfoBean);
     }
 
     /**
      * 删除全部记录
      */
-    public void deleteAll(){
+    public void deleteAll() {
         MyApplication.getInstances().getDaoSession().getUserInfoBeanDao().deleteAll();
     }
 
     /**
      * 查询全部
+     *
      * @return
      */
-    public  List<UserInfoBean> getUser(){
-      return MyApplication.getInstances().getDaoSession().getUserInfoBeanDao().loadAll();
+    public List<UserInfoBean> getUser() {
+        return MyApplication.getInstances().getDaoSession().getUserInfoBeanDao().loadAll();
     }
+
+    public void updateUser(UserInfoBean userInfoBean) {
+        MyApplication.getInstances().getDaoSession().getUserInfoBeanDao().update(userInfoBean);
+    }
+
 
 }

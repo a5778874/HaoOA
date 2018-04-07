@@ -27,8 +27,11 @@ import zzh.com.haooa.MyApplication;
 import zzh.com.haooa.Utils.ToastUtils;
 import zzh.com.haooa.bean.UserInfoBean;
 import zzh.com.haooa.bmob.bean.user;
+import zzh.com.haooa.bmob.dao.BmobStringCallBack;
+import zzh.com.haooa.bmob.dao.DepartmentDAO;
 import zzh.com.haooa.bmob.dao.UserCallBack;
 import zzh.com.haooa.bmob.dao.UserDAO;
+import zzh.com.haooa.dao.UserAccountDAO;
 import zzh.com.haooa.dao.UserInfoDAO;
 import zzh.com.haooa.fragment.ContactsFragment;
 import zzh.com.haooa.bean.TabSpecBean;
@@ -36,6 +39,7 @@ import zzh.com.haooa.fragment.MessageFragment;
 import zzh.com.haooa.fragment.MineFragment;
 import zzh.com.haooa.R;
 import zzh.com.haooa.fragment.WorkFragment;
+import zzh.com.haooa.greenDao.UserInfoBeanDao;
 
 public class MainActivity extends FragmentActivity {
     private FrameLayout tabContent;
@@ -53,56 +57,30 @@ public class MainActivity extends FragmentActivity {
         mInflater = LayoutInflater.from(this);
         initView();
         initData();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
     }
 
     private void initData() {
         //注册EventBus广播，用来接收注册用户信息
         EventBus.getDefault().register(MainActivity.this);
-
-        //初始化用户资料
-        final String hxUsername = EMClient.getInstance().getCurrentUser();
-        Log.d("TAG", "MainActivity getUser: " + hxUsername);
-        //获取服务器资料
-        new UserDAO().getUserInfo(hxUsername, new UserCallBack() {
-            @Override
-            public void getUser(List<user> list, BmobException e) {
-                if (e == null) {
-                    //保存到本地数据库
-                    user myUser = list.get(0);
-                    Log.d("TAG", "MainActivity getUser: " + myUser.getDepartmentID());
-                    UserInfoBean userInfoBean = new UserInfoBean();
-                    userInfoBean.setHxUsername(myUser.getHxUsername());
-                    userInfoBean.setDepartmentID(myUser.getDepartmentID());
-                    userInfoBean.setSex(myUser.getSex());
-                    userInfoBean.setNick(myUser.getNick());
-                    userInfoBean.setAddress(myUser.getAddress());
-                    userInfoBean.setPhone(myUser.getPhone());
-                    userInfoBean.setMail(myUser.getMail());
-
-                    String localUser = UserInfoDAO.init().getUser().get(0).getHxUsername();
-                    Log.d("TAG", "get localUser: " + localUser);
-
-                    //保证本地数据库只保留一条当前用户的数据
-                    if (!localUser.equals(hxUsername)) {
-                        UserInfoDAO.init().deleteAll();
-                    }
-                    UserInfoDAO.init().addUser(userInfoBean);
-                } else {
-                    ToastUtils.showToast(MainActivity.this, "初始化用户信息失败");
-                    Log.d("TAG", "MainActivity getUser: " + e.getLocalizedMessage());
-                }
-            }
-        });
+        //初始化用户信息
+        initUserInfo();
     }
+
 
     //接收EventBus信息
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginEvent(LoginEvent event) {
         MineFragment.setUser(event.username, event.head);
-
+        //初始化用户信息
+        initUserInfo();
     }
+
 
     private void initView() {
         tabContent = findViewById(R.id.tabContent);
@@ -147,6 +125,60 @@ public class MainActivity extends FragmentActivity {
         return view;
     }
 
+    private void initUserInfo() {
+        //初始化用户资料
+        final String hxUsername = EMClient.getInstance().getCurrentUser();
+        Log.d("TAG", "MainActivity getUser: " + hxUsername);
+        //获取服务器资料
+        new UserDAO().getUserInfo(hxUsername, new UserCallBack() {
+            @Override
+            public void getUser(List<user> list, BmobException e) {
+                if (e == null) {
+                    //保存到本地数据库
+                    user myUser = list.get(0);
+                    Log.d("TAG", "MainActivity getUser: " + myUser.getDepartmentID());
+                    final UserInfoBean userInfoBean = new UserInfoBean();
+                    userInfoBean.setHxUsername(myUser.getHxUsername());
+                    userInfoBean.setDepartmentID(myUser.getDepartmentID());
+                    userInfoBean.setSex(myUser.getSex());
+                    userInfoBean.setNick(myUser.getNick());
+                    userInfoBean.setAddress(myUser.getAddress());
+                    userInfoBean.setPhone(myUser.getPhone());
+                    userInfoBean.setMail(myUser.getMail());
+
+                    //查询上一次的登录的用户信息
+                    List<UserInfoBean> user = UserInfoDAO.init().getUser();
+                    String localUser = "";
+                    //判断是第一次登录
+                    if (user.size() > 0)
+                        localUser = user.get(0).getHxUsername();
+
+                    //判断是否替换新用户的信息，保证本地数据库只保留一条当前用户的数据
+                    if (!localUser.equals(hxUsername)) {
+                        UserInfoDAO.init().deleteAll();
+                        Log.d("TAG", "userInfoBean: " + userInfoBean.toString());
+                        UserInfoDAO.init().addUser(userInfoBean);
+                        //从服务器获取部门id对应的名字并保存
+                        new DepartmentDAO().getDepartmentByID(myUser.getDepartmentID(), new BmobStringCallBack() {
+                            @Override
+                            public void getName(String name, BmobException e) {
+                                if (e == null) {
+                                    userInfoBean.setDepartmentName(name);
+                                    UserInfoDAO.init().updateUser(userInfoBean);
+                                }
+                            }
+                        });
+                    }
+
+
+                } else {
+                    ToastUtils.showToast(MainActivity.this, "初始化用户信息失败");
+                    Log.d("TAG", "MainActivity getUser: " + e.getLocalizedMessage());
+                }
+            }
+        });
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -155,4 +187,5 @@ public class MainActivity extends FragmentActivity {
         //移除栈记录
         MyApplication.getInstances().activitiesSets.remove(MainActivity.this);
     }
+
 }
