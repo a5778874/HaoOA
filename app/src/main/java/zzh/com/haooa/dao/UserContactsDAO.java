@@ -32,6 +32,15 @@ public class UserContactsDAO {
         return MyApplication.getInstances().getDaoSession().getUserContactsTableBeanDao().insertOrReplace(userContactsTableBean);
     }
 
+
+    /**
+     * 删除全部联系人
+     */
+    public void deleteAll(){
+        MyApplication.getInstances().getDaoSession().getUserContactsTableBeanDao().deleteAll();
+    }
+
+
     /**
      * 获取联系人列表
      */

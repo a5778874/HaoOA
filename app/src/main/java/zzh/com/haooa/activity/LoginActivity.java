@@ -26,6 +26,7 @@ import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.Utils.ToastUtils;
 import zzh.com.haooa.bean.UserAccountTableBean;
 import zzh.com.haooa.dao.UserAccountDAO;
+import zzh.com.haooa.dao.UserContactsDAO;
 
 /**
  * Created by ZZH on 2018/2/1.
@@ -115,6 +116,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                //清空上一个登录用户的好友列表数据库信息
+                                UserContactsDAO.init().deleteAll();
                                 //保存登录用户信息到本地
                                 UserAccountTableBean userAccountTableBean=new UserAccountTableBean();
                                 userAccountTableBean.setHxUsername(loginName);
