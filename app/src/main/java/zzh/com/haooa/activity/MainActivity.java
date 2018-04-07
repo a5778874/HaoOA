@@ -172,7 +172,7 @@ public class MainActivity extends FragmentActivity {
 
 
                 } else {
-                    ToastUtils.showToast(MainActivity.this, "初始化用户信息失败");
+                    ToastUtils.showToast(MainActivity.this, "初始化用户信息失败,请检查网络是否连接");
                     Log.d("TAG", "MainActivity getUser: " + e.getLocalizedMessage());
                 }
             }

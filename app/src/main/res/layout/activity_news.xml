@@ -16,6 +16,7 @@
             android:id="@+id/titlebar_news"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:titleBarLeftImage="@drawable/btn_titlebarback_selector"
             app:titleBarRightImage="@mipmap/em_add"
             app:titleBarTitle="最新新闻" />
 

@@ -17,6 +17,7 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import cn.bmob.v3.listener.FindListener;
 
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
+import zzh.com.haooa.activity.notify.NotifyActivity;
 import zzh.com.haooa.adapter.NewsItemAdapter;
 import zzh.com.haooa.bmob.bean.news;
 
@@ -41,41 +43,46 @@ public class NewsActivity extends Activity {
     private ProgressBar pb_newslists;
     private List<news> newsList = new ArrayList<>();  //保存服务器返回的新闻列表
 
-    private Handler handler = new Handler() {
+    private Handler mHandler;
+
+    static class mHandler extends Handler {
+        WeakReference<NewsActivity> mActivity;
+
+        public mHandler(NewsActivity activity) {
+            mActivity = new WeakReference<NewsActivity>(activity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+            final NewsActivity newsActivity = mActivity.get();
             if (msg.what == 1) {
-                newsList.clear();
-                newsList.addAll((List<news>) msg.obj);
-                newsItemAdapter = new NewsItemAdapter(NewsActivity.this, newsList);
-                news_itemview.setAdapter(newsItemAdapter);
-                news_itemview.setLayoutManager(new LinearLayoutManager(NewsActivity.this, LinearLayoutManager.VERTICAL, false));
-                news_itemview.addItemDecoration(new DividerItemDecoration(NewsActivity.this, DividerItemDecoration.VERTICAL));
-                newsItemAdapter.setmItemClickListener(new NewsItemAdapter.OnItemClickListener() {
+                newsActivity.newsList.clear();
+                newsActivity.newsList.addAll((List<news>) msg.obj);
+                newsActivity.newsItemAdapter = new NewsItemAdapter(newsActivity, newsActivity.newsList);
+                newsActivity.news_itemview.setAdapter(newsActivity.newsItemAdapter);
+                newsActivity.news_itemview.setLayoutManager(new LinearLayoutManager(newsActivity, LinearLayoutManager.VERTICAL, false));
+                newsActivity.news_itemview.addItemDecoration(new DividerItemDecoration(newsActivity, DividerItemDecoration.VERTICAL));
+                newsActivity.newsItemAdapter.setmItemClickListener(new NewsItemAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        news newsDetails = newsList.get(position);
+                        news newsDetails = newsActivity.newsList.get(position);
                         //跳转到详情页
-                        Intent it = new Intent(NewsActivity.this, ShowNewsActivity.class);
+                        Intent it = new Intent(newsActivity, ShowNewsActivity.class);
                         it.putExtra("news", newsDetails);
-                        startActivity(it);
+                        newsActivity.startActivity(it);
                     }
                 });
-                Log.d("TAG", "handleMessage: " + newsList.size());
-            } else {
-                Log.d("TAG", "handleMessage: " + msg.obj.toString());
             }
+
         }
-    };
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         initView();
-
-
+        mHandler = new mHandler(this);
     }
 
     @Override
@@ -83,6 +90,12 @@ public class NewsActivity extends Activity {
         super.onResume();
         pb_newslists.setVisibility(View.VISIBLE);
         initDatas();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     private void initDatas() {
@@ -104,7 +117,7 @@ public class NewsActivity extends Activity {
                             Message message = new Message();
                             message.what = 1;
                             message.obj = list;
-                            handler.sendMessage(message);
+                            mHandler.sendMessage(message);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -117,7 +130,7 @@ public class NewsActivity extends Activity {
                             Message message = new Message();
                             message.what = 0;
                             message.obj = e.toString();
-                            handler.sendMessage(message);
+                            mHandler.sendMessage(message);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -142,6 +155,12 @@ public class NewsActivity extends Activity {
                 it.putExtra("NewsStatus", AddNewsActivity.STATUS_ADD_NEWS);
                 //跳转到新建新闻页面
                 startActivity(new Intent(NewsActivity.this, AddNewsActivity.class));
+            }
+        });
+        newsTitleBar.setLeftLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewsActivity.this.finish();
             }
         });
 
