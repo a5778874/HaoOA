@@ -10,9 +10,11 @@
         android:orientation="vertical">
 
         <com.hyphenate.easeui.widget.EaseTitleBar
+            android:id="@+id/titlebar_show_notify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"
+            app:titleBarLeftImage="@drawable/btn_titlebarback_selector"
             app:titleBarTitle="通知详情" />
 
 
@@ -48,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_toLeftOf="@id/details_author"
+                    android:layout_toLeftOf="@id/tv_notifydetails_department"
                     android:text="下发部门:"
                     android:textSize="16sp" />
 

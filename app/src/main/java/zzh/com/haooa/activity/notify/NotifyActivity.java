@@ -73,7 +73,11 @@ public class NotifyActivity extends Activity {
                 notifyActivity.notifyItemAdapter.setmItemClickListener(new NewsItemAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        ToastUtils.showToast(notifyActivity, position + "..");
+                        Notify notifyDetails = notifyActivity.notifyList.get(position);
+                        //跳转到详情页
+                        Intent it = new Intent(notifyActivity, ShowNotifyActivity.class);
+                        it.putExtra("notify", notifyDetails);
+                        notifyActivity.startActivity(it);
                     }
                 });
             } else {
@@ -107,6 +111,12 @@ public class NotifyActivity extends Activity {
                 NotifyActivity.this.finish();
             }
         });
+        notifyTitleBar.setRightLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.showToast(NotifyActivity.this,"你无权限发表公告");
+            }
+        });
         notify_itemview = findViewById(R.id.rv_notify_item);
         notify_refreshLayout = findViewById(R.id.notify_refresh);
         //下拉刷新
@@ -123,7 +133,6 @@ public class NotifyActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        pb_notifylists.setVisibility(View.VISIBLE);
         initDatas();
     }
 
@@ -132,6 +141,7 @@ public class NotifyActivity extends Activity {
     }
 
     private void initNotifyDatas() {
+        pb_notifylists.setVisibility(View.VISIBLE);
         //1.获取部门id
         String departmentID = UserInfoDAO.init().getUser().get(0).getDepartmentID();
 

@@ -44,41 +44,29 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.LoginActivity" />
 
-        </activity>
+        <activity android:name=".activity.RegisterActivity" />
 
-        <activity android:name=".activity.RegisterActivity">
+        <activity android:name=".activity.AddContactsActivity" />
 
-        </activity>
-        <activity android:name=".activity.AddContactsActivity">
+        <activity android:name=".activity.InviteActivity" />
 
-        </activity>
-        <activity android:name=".activity.InviteActivity">
+        <activity android:name=".activity.ChatActivity" />
 
-        </activity>
+        <activity android:name=".activity.newsActivity.NewsActivity" />
 
-        <activity android:name=".activity.ChatActivity">
+        <activity android:name=".activity.newsActivity.AddNewsActivity" />
 
-        </activity>
-        <activity android:name=".activity.newsActivity.NewsActivity">
+        <activity android:name=".activity.newsActivity.ShowNewsActivity" />
 
-        </activity>
-        <activity android:name=".activity.newsActivity.AddNewsActivity">
+        <activity android:name=".activity.notify.NotifyActivity" />
 
-        </activity>
+        <activity android:name=".activity.notify.ShowNotifyActivity" />
 
-        <activity android:name=".activity.newsActivity.ShowNewsActivity">
+        <activity android:name=".activity.UserInfoActivity" />
 
-        </activity>
 
-        <activity android:name=".activity.notify.NotifyActivity">
-
-        </activity>
-
-        <activity android:name=".activity.UserInfoActivity">
-
-        </activity>
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"

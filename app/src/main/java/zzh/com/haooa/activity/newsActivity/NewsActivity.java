@@ -88,7 +88,6 @@ public class NewsActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        pb_newslists.setVisibility(View.VISIBLE);
         initDatas();
     }
 
@@ -104,6 +103,7 @@ public class NewsActivity extends Activity {
     }
 
     private void initNewsDatas() {
+        pb_newslists.setVisibility(View.VISIBLE);
         ThreadPoolUtils.getInstance().getGlobalThreadPool().execute(new Runnable() {
             @Override
             public void run() {

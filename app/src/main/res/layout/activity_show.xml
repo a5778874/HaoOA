@@ -10,8 +10,10 @@
         android:orientation="vertical">
 
         <com.hyphenate.easeui.widget.EaseTitleBar
+            android:id="@+id/titlebar_show_news"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:titleBarLeftImage="@drawable/btn_titlebarback_selector"
             android:scrollbars="vertical"
             app:titleBarTitle="新闻详情" />
 

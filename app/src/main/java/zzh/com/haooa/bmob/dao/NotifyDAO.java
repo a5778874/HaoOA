@@ -37,6 +37,7 @@ public class NotifyDAO {
             @Override
             public void run() {
                 BmobQuery<Notify> eq1 = new BmobQuery<Notify>();
+                //departmentID为0时，代表面向全部部门
                 eq1.addWhereEqualTo("departmentID", "0");
                 BmobQuery<Notify> eq2 = new BmobQuery<Notify>();
                 eq2.addWhereEqualTo("departmentID", departmentID);

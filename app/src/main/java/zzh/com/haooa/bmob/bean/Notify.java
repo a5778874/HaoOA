@@ -1,12 +1,14 @@
 package zzh.com.haooa.bmob.bean;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 
 /**
  * Created by ZZH on 2018/4/6.
  */
 
-public class Notify extends BmobObject {
+public class Notify extends BmobObject implements Serializable {
     private String notify_title;
     private String notify_text;
     private String departmentID;

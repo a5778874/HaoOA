@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.widget.EaseTitleBar;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
@@ -26,6 +27,7 @@ import zzh.com.haooa.bmob.bean.news;
 
 public class ShowNewsActivity extends Activity implements View.OnClickListener {
     private TextView tv_title, tv_text, tv_time, tv_author;
+    private EaseTitleBar easeTitleBar;
     private ImageView iv_delete, iv_edit;
     private RelativeLayout rl_edit;
     private news newsDetails;
@@ -48,6 +50,13 @@ public class ShowNewsActivity extends Activity implements View.OnClickListener {
         iv_edit = findViewById(R.id.details_edit);
         iv_edit.setOnClickListener(this);
         rl_edit = findViewById(R.id.rl_edit);
+        easeTitleBar = findViewById(R.id.titlebar_show_news);
+        easeTitleBar.setLeftLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowNewsActivity.this.finish();
+            }
+        });
 
     }
 
