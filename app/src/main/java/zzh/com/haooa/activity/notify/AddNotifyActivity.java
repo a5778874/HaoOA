@@ -4,15 +4,24 @@ package zzh.com.haooa.activity.notify;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.hyphenate.chat.EMClient;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -20,7 +29,6 @@ import cn.bmob.v3.listener.UpdateListener;
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.Utils.ToastUtils;
-import zzh.com.haooa.activity.newsActivity.AddNewsActivity;
 import zzh.com.haooa.bmob.bean.Notify;
 import zzh.com.haooa.bmob.bean.news;
 
@@ -31,6 +39,7 @@ import zzh.com.haooa.bmob.bean.news;
 public class AddNotifyActivity extends Activity implements View.OnClickListener {
     private EditText et_notify_title, et_notify_text;
     private Button bt_save_notify, bt_public_notify, bt_clear_notify;
+    private Spinner mySpinner;
     private boolean isEdit = true;
 
     public static final int STATUS_EDIT_NOTIFY = 300;  //编辑状态
@@ -38,13 +47,56 @@ public class AddNotifyActivity extends Activity implements View.OnClickListener 
     private int editStatus = STATUS_ADD_NOTIFY;//编辑新闻的状态，新建状态还是编辑状态。
 
     private Notify NotifyDetails;//传递过来的新闻信息
+    private String selectDepertmentID="0";  //下拉框默认选择id
+
+
+    Map<String, String> departmentMap = new LinkedHashMap<>();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addnotify);
+
+        initDepartmentList();
         initView();
         initData();
+    }
+
+    private void initDepartmentList() {
+        departmentMap.put("所有", "0");
+        departmentMap.put("开发部", "1001");
+        departmentMap.put("后勤部", "1002");
+        departmentMap.put("人力资源部","1003");
+        departmentMap.put("财务部", "1004");
+        departmentMap.put("管理者", "1005");
+    }
+
+
+    private void initView() {
+        et_notify_title = findViewById(R.id.et_addnotifytitle);
+        et_notify_text = findViewById(R.id.et_addnotifytext);
+        bt_save_notify = findViewById(R.id.bt_save_notify);
+        bt_public_notify = findViewById(R.id.bt_clear_notify);
+        bt_clear_notify = findViewById(R.id.bt_publishnotify);
+        mySpinner = findViewById(R.id.spinner_addnotify);
+        Set<String> departmentNameSet = departmentMap.keySet();
+        final List<String> departmentNameList = new ArrayList<>(departmentNameSet);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,departmentNameList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mySpinner.setAdapter(adapter);
+        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectDepertmentID=departmentMap.get(departmentNameList.get(position));
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void initData() {
@@ -59,14 +111,6 @@ public class AddNotifyActivity extends Activity implements View.OnClickListener 
         } else {
 
         }
-    }
-
-    private void initView() {
-        et_notify_title = findViewById(R.id.et_addnotifytitle);
-        et_notify_text = findViewById(R.id.et_addnotifytext);
-        bt_save_notify = findViewById(R.id.bt_save_notify);
-        bt_public_notify = findViewById(R.id.bt_clear_notify);
-        bt_clear_notify = findViewById(R.id.bt_publishnotify);
     }
 
     @Override
@@ -103,6 +147,8 @@ public class AddNotifyActivity extends Activity implements View.OnClickListener 
                         Notify notify = new Notify();
                         notify.setNotify_title(title);
                         notify.setNotify_text(text);
+                        notify.setDepartmentID(selectDepertmentID);
+                        notify.setAuthor(author);
                         notify.update(NotifyDetails.getObjectId(), new UpdateListener() {
                             @Override
                             public void done(BmobException e) {
