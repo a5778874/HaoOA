@@ -141,6 +141,7 @@ public class MainActivity extends FragmentActivity {
                     userInfoBean.setHxUsername(myUser.getHxUsername());
                     userInfoBean.setDepartmentID(myUser.getDepartmentID());
                     userInfoBean.setSex(myUser.getSex());
+                    userInfoBean.setRole(myUser.getRole());
                     userInfoBean.setNick(myUser.getNick());
                     userInfoBean.setAddress(myUser.getAddress());
                     userInfoBean.setPhone(myUser.getPhone());

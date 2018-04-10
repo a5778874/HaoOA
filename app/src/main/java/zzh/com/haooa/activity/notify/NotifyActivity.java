@@ -114,7 +114,16 @@ public class NotifyActivity extends Activity {
         notifyTitleBar.setRightLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.showToast(NotifyActivity.this,"你无权限发表公告");
+                //判断是否有权限发表公告，1为有权限，0为无权限
+                Log.d("TAG", "onClick: "+UserInfoDAO.init().getUser().get(0).getRole());
+                if (UserInfoDAO.init().getUser().get(0).getRole() == 1) {
+                    Intent it = new Intent(NotifyActivity.this, AddNotifyActivity.class);
+                    it.putExtra("NotifyStatus", AddNotifyActivity.STATUS_ADD_NOTIFY);
+                    //跳转到新建公告页面
+                    startActivity(it);
+                } else {
+                    ToastUtils.showToast(NotifyActivity.this, "你无权限发表公告");
+                }
             }
         });
         notify_itemview = findViewById(R.id.rv_notify_item);

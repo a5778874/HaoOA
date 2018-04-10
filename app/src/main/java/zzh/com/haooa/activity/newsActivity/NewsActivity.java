@@ -154,7 +154,7 @@ public class NewsActivity extends Activity {
                 Intent it = new Intent(NewsActivity.this, AddNewsActivity.class);
                 it.putExtra("NewsStatus", AddNewsActivity.STATUS_ADD_NEWS);
                 //跳转到新建新闻页面
-                startActivity(new Intent(NewsActivity.this, AddNewsActivity.class));
+                startActivity(it);
             }
         });
         newsTitleBar.setLeftLayoutClickListener(new View.OnClickListener() {

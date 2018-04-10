@@ -45,6 +45,7 @@ public class AddNewsActivity extends Activity implements View.OnClickListener {
     }
 
     private void initData() {
+        //判断是新建还是编辑状态
         Intent it = getIntent();
         editStatus = it.getIntExtra("NewsStatus", STATUS_ADD_NEWS);
         if (editStatus == STATUS_EDIT_NEWS) {

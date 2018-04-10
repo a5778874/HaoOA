@@ -64,6 +64,8 @@
 
         <activity android:name=".activity.notify.ShowNotifyActivity" />
 
+        <activity android:name=".activity.notify.AddNotifyActivity" />
+
         <activity android:name=".activity.UserInfoActivity" />
 
 

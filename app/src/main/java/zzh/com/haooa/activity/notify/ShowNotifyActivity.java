@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class ShowNotifyActivity extends Activity {
     private TextView notify_title, notify_text, notify_time, notify_department;
     private EaseTitleBar easeTitleBar;
     private RelativeLayout rl_notifydetails_edit;
+    private ImageView iv_notifydetails_delete,iv_notifydetails_edit;
     private Notify notifyDetails;
 
     @Override
