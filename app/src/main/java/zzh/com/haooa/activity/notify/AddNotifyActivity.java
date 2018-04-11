@@ -44,13 +44,15 @@ public class AddNotifyActivity extends Activity implements View.OnClickListener 
 
     public static final int STATUS_EDIT_NOTIFY = 300;  //编辑状态
     public static final int STATUS_ADD_NOTIFY = 301;   //新建状态
-    private int editStatus = STATUS_ADD_NOTIFY;//编辑新闻的状态，新建状态还是编辑状态。
+    private int editStatus = STATUS_ADD_NOTIFY;//编辑通知的状态，新建状态还是编辑状态。
 
     private Notify NotifyDetails;//传递过来的新闻信息
-    private String selectDepertmentID="0";  //下拉框默认选择id
+    private String selectDepertmentID = "0";  //下拉框默认选择id
 
 
     Map<String, String> departmentMap = new LinkedHashMap<>();
+    Set<String> departmentNameSet;
+    List<String> departmentNameList;
 
 
     @Override
@@ -58,37 +60,53 @@ public class AddNotifyActivity extends Activity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addnotify);
 
-        initDepartmentList();
+        initDepartmentMap();
         initView();
         initData();
     }
 
-    private void initDepartmentList() {
+    private void initDepartmentMap() {
         departmentMap.put("所有", "0");
         departmentMap.put("开发部", "1001");
         departmentMap.put("后勤部", "1002");
-        departmentMap.put("人力资源部","1003");
+        departmentMap.put("人力资源部", "1003");
         departmentMap.put("财务部", "1004");
         departmentMap.put("管理者", "1005");
     }
 
 
+    //判断部门id是下拉选择第几项
+    private int getIndexByDepartmentID(String DepartmentID) {
+        Set<Map.Entry<String, String>> departmentEntrySets = departmentMap.entrySet();
+        int i = 0;
+        for (Map.Entry<String, String> entry : departmentEntrySets) {
+            if (entry.getValue().equals(DepartmentID)) {
+                return i;
+            }
+            i++;
+        }
+        return 0;
+    }
+
     private void initView() {
         et_notify_title = findViewById(R.id.et_addnotifytitle);
         et_notify_text = findViewById(R.id.et_addnotifytext);
         bt_save_notify = findViewById(R.id.bt_save_notify);
-        bt_public_notify = findViewById(R.id.bt_clear_notify);
-        bt_clear_notify = findViewById(R.id.bt_publishnotify);
+        bt_save_notify.setOnClickListener(this);
+        bt_public_notify = findViewById(R.id.bt_publishnotify);
+        bt_public_notify.setOnClickListener(this);
+        bt_clear_notify = findViewById(R.id.bt_clear_notify);
+        bt_clear_notify.setOnClickListener(this);
         mySpinner = findViewById(R.id.spinner_addnotify);
-        Set<String> departmentNameSet = departmentMap.keySet();
-        final List<String> departmentNameList = new ArrayList<>(departmentNameSet);
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,departmentNameList);
+        departmentNameSet = departmentMap.keySet();  //获取Map的建集合
+        departmentNameList = new ArrayList<>(departmentNameSet);///把Set集合转为list集合
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, departmentNameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner.setAdapter(adapter);
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectDepertmentID=departmentMap.get(departmentNameList.get(position));
+                selectDepertmentID = departmentMap.get(departmentNameList.get(position));
 
             }
 
@@ -107,6 +125,7 @@ public class AddNotifyActivity extends Activity implements View.OnClickListener 
             NotifyDetails = (Notify) it.getSerializableExtra("NotifyDetails");
             et_notify_title.setText(NotifyDetails.getNotify_title());
             et_notify_text.setText(NotifyDetails.getNotify_text());
+            mySpinner.setSelection(getIndexByDepartmentID(NotifyDetails.getDepartmentID()));
             Log.d("TAG", "addNotifyActivity obj ID: " + NotifyDetails.getObjectId());
         } else {
 
@@ -117,13 +136,16 @@ public class AddNotifyActivity extends Activity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_save_notify:
+                Log.d("AddNotify", "保存 ");
                 isEdit = !isEdit;
                 changeEditable(isEdit);
                 break;
             case R.id.bt_clear_notify:
+                Log.d("AddNotify", "清空 ");
                 clearEdittext();
                 break;
             case R.id.bt_publishnotify:
+                Log.d("AddNotify", "发布 ");
                 publicNotify();
                 break;
         }
@@ -165,18 +187,19 @@ public class AddNotifyActivity extends Activity implements View.OnClickListener 
                 });
 
             }
-            //新建新闻的逻辑
+            //新建公告的逻辑
             else {
                 ThreadPoolUtils.getInstance().getGlobalThreadPool().execute(new Runnable() {
                     @Override
                     public void run() {
                         String author = EMClient.getInstance().getCurrentUser();
-                        //向Bmob服务器发布新闻
-                        news myNews = new news();
-                        myNews.setNews_title(title);
-                        myNews.setNews_text(text);
-                        myNews.setAuthor(author);
-                        myNews.save(new SaveListener<String>() {
+                        //向Bmob服务器发布公告
+                        Notify mNotify = new Notify();
+                        mNotify.setNotify_title(title);
+                        mNotify.setNotify_text(text);
+                        mNotify.setDepartmentID(selectDepertmentID);
+                        mNotify.setAuthor(author);
+                        mNotify.save(new SaveListener<String>() {
                             @Override
                             public void done(String objectId, BmobException e) {
                                 if (e == null) {
