@@ -71,7 +71,7 @@ public class AddNotifyActivity extends Activity implements View.OnClickListener 
         departmentMap.put("后勤部", "1002");
         departmentMap.put("人力资源部", "1003");
         departmentMap.put("财务部", "1004");
-        departmentMap.put("管理者", "1005");
+        departmentMap.put("管理层", "1005");
     }
 
 
