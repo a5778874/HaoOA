@@ -149,16 +149,13 @@ public class AddContactsActivity extends Activity implements View.OnClickListene
                             ToastUtils.showToast(AddContactsActivity.this, "用户不存在");
                             ll_add.setVisibility(View.GONE);
                         }
-
                     }
                 });
-
     }
 
 
     //添加联系人
     private void addUser(final String user, final String addReason) {
-
         ThreadPoolUtils.getInstance().getGlobalThreadPool().execute(new Runnable() {
             @Override
             public void run() {
@@ -180,9 +177,7 @@ public class AddContactsActivity extends Activity implements View.OnClickListene
                         }
                     });
                 }
-
             }
         });
-
     }
 }

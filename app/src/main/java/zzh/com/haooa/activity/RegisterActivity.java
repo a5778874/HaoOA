@@ -87,7 +87,6 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             ToastUtils.showToast(RegisterActivity.this, "两次输入的密码不同");
             return;
         }
-
         //3 去服务器注册帐号
         ThreadPoolUtils.getInstance().getGlobalThreadPool().execute(new Runnable() {
             @Override
@@ -139,8 +138,6 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 }
             }
         });
-
-
     }
 
 

@@ -155,7 +155,7 @@ public class NotifyActivity extends Activity {
         String departmentID = UserInfoDAO.init().getUser().get(0).getDepartmentID();
 
         //2.只加载自己部门的通知
-        new NotifyDAO().getNotifyList(new NotifyCallBack() {
+        new NotifyDAO().getDepartmentNotifyList(departmentID,new NotifyCallBack() {
             @Override
             public void getNotifyList(List<Notify> list, BmobException e) {
                 if (e == null) {

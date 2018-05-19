@@ -127,7 +127,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 ToastUtils.showToast(LoginActivity.this, "登录成功");
                                 //使用eventBus发送注册的用户名密码到登录界面
                                 EventBus.getDefault().post(new LoginEvent(loginName));
-                                //如果从欢迎页面进来登录的则启动主页面，否则直接解释该页面
+                                //如果从欢迎页面进来登录的则启动主页面，否则直接结束该页面
                                 if (fromWelcomeActivity){
                                     Intent it=new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(it);
@@ -144,11 +144,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                //隐藏进度条
                                 loginBar.setVisibility(View.GONE);
                                 ToastUtils.showToast(LoginActivity.this, "登录失败：" + s);
                             }
                         });
-
                     }
 
                     // 登录过程中的处理
@@ -157,6 +157,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                //显示进度条
                                 loginBar.setVisibility(View.VISIBLE);
                             }
                         });
@@ -164,8 +165,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 });
             }
         });
-
-
     }
 
     @Override
