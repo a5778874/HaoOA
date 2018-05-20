@@ -81,10 +81,12 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         // 2 校验输入的用户名和密码
         if (TextUtils.isEmpty(registName) || TextUtils.isEmpty(registPwd) || TextUtils.isEmpty(registPwd)) {
             ToastUtils.showToast(RegisterActivity.this, "信息不能为空");
+            pb.setVisibility(View.GONE);
             return;
         }
         if (!registPwd.equals(registPwdAgain)) {
             ToastUtils.showToast(RegisterActivity.this, "两次输入的密码不同");
+            pb.setVisibility(View.GONE);
             return;
         }
         //3 去服务器注册帐号
