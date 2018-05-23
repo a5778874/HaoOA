@@ -1,18 +1,13 @@
 package zzh.com.haooa.greenDao;
 
-import java.util.List;
-import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.Property;
-import org.greenrobot.greendao.internal.SqlUtils;
 import org.greenrobot.greendao.internal.DaoConfig;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseStatement;
-
-import zzh.com.haooa.bean.UserInfoBean;
 
 import zzh.com.haooa.bean.DepartmentBean;
 
@@ -30,13 +25,11 @@ public class DepartmentBeanDao extends AbstractDao<DepartmentBean, String> {
      */
     public static class Properties {
         public final static Property DepartmentID = new Property(0, String.class, "departmentID", true, "DEPARTMENT_ID");
-        public final static Property HxUsername = new Property(1, String.class, "HxUsername", false, "HX_USERNAME");
+        public final static Property LeaderID = new Property(1, String.class, "leaderID", false, "LEADER_ID");
         public final static Property DepartmentName = new Property(2, String.class, "departmentName", false, "DEPARTMENT_NAME");
         public final static Property CreateTime = new Property(3, String.class, "createTime", false, "CREATE_TIME");
         public final static Property UpdateTime = new Property(4, String.class, "updateTime", false, "UPDATE_TIME");
     }
-
-    private DaoSession daoSession;
 
 
     public DepartmentBeanDao(DaoConfig config) {
@@ -45,7 +38,6 @@ public class DepartmentBeanDao extends AbstractDao<DepartmentBean, String> {
     
     public DepartmentBeanDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
-        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -53,7 +45,7 @@ public class DepartmentBeanDao extends AbstractDao<DepartmentBean, String> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"DEPARTMENT_BEAN\" (" + //
                 "\"DEPARTMENT_ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: departmentID
-                "\"HX_USERNAME\" TEXT," + // 1: HxUsername
+                "\"LEADER_ID\" TEXT," + // 1: leaderID
                 "\"DEPARTMENT_NAME\" TEXT," + // 2: departmentName
                 "\"CREATE_TIME\" TEXT," + // 3: createTime
                 "\"UPDATE_TIME\" TEXT);"); // 4: updateTime
@@ -74,9 +66,9 @@ public class DepartmentBeanDao extends AbstractDao<DepartmentBean, String> {
             stmt.bindString(1, departmentID);
         }
  
-        String HxUsername = entity.getHxUsername();
-        if (HxUsername != null) {
-            stmt.bindString(2, HxUsername);
+        String leaderID = entity.getLeaderID();
+        if (leaderID != null) {
+            stmt.bindString(2, leaderID);
         }
  
         String departmentName = entity.getDepartmentName();
@@ -104,9 +96,9 @@ public class DepartmentBeanDao extends AbstractDao<DepartmentBean, String> {
             stmt.bindString(1, departmentID);
         }
  
-        String HxUsername = entity.getHxUsername();
-        if (HxUsername != null) {
-            stmt.bindString(2, HxUsername);
+        String leaderID = entity.getLeaderID();
+        if (leaderID != null) {
+            stmt.bindString(2, leaderID);
         }
  
         String departmentName = entity.getDepartmentName();
@@ -126,12 +118,6 @@ public class DepartmentBeanDao extends AbstractDao<DepartmentBean, String> {
     }
 
     @Override
-    protected final void attachEntity(DepartmentBean entity) {
-        super.attachEntity(entity);
-        entity.__setDaoSession(daoSession);
-    }
-
-    @Override
     public String readKey(Cursor cursor, int offset) {
         return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
     }    
@@ -140,7 +126,7 @@ public class DepartmentBeanDao extends AbstractDao<DepartmentBean, String> {
     public DepartmentBean readEntity(Cursor cursor, int offset) {
         DepartmentBean entity = new DepartmentBean( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // departmentID
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // HxUsername
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // leaderID
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // departmentName
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // createTime
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // updateTime
@@ -151,7 +137,7 @@ public class DepartmentBeanDao extends AbstractDao<DepartmentBean, String> {
     @Override
     public void readEntity(Cursor cursor, DepartmentBean entity, int offset) {
         entity.setDepartmentID(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setHxUsername(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setLeaderID(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setDepartmentName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setCreateTime(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setUpdateTime(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
@@ -181,95 +167,4 @@ public class DepartmentBeanDao extends AbstractDao<DepartmentBean, String> {
         return true;
     }
     
-    private String selectDeep;
-
-    protected String getSelectDeep() {
-        if (selectDeep == null) {
-            StringBuilder builder = new StringBuilder("SELECT ");
-            SqlUtils.appendColumns(builder, "T", getAllColumns());
-            builder.append(',');
-            SqlUtils.appendColumns(builder, "T0", daoSession.getUserInfoBeanDao().getAllColumns());
-            builder.append(" FROM DEPARTMENT_BEAN T");
-            builder.append(" LEFT JOIN USER_INFO_BEAN T0 ON T.\"HX_USERNAME\"=T0.\"HX_USERNAME\"");
-            builder.append(' ');
-            selectDeep = builder.toString();
-        }
-        return selectDeep;
-    }
-    
-    protected DepartmentBean loadCurrentDeep(Cursor cursor, boolean lock) {
-        DepartmentBean entity = loadCurrent(cursor, 0, lock);
-        int offset = getAllColumns().length;
-
-        UserInfoBean user = loadCurrentOther(daoSession.getUserInfoBeanDao(), cursor, offset);
-        entity.setUser(user);
-
-        return entity;    
-    }
-
-    public DepartmentBean loadDeep(Long key) {
-        assertSinglePk();
-        if (key == null) {
-            return null;
-        }
-
-        StringBuilder builder = new StringBuilder(getSelectDeep());
-        builder.append("WHERE ");
-        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
-        String sql = builder.toString();
-        
-        String[] keyArray = new String[] { key.toString() };
-        Cursor cursor = db.rawQuery(sql, keyArray);
-        
-        try {
-            boolean available = cursor.moveToFirst();
-            if (!available) {
-                return null;
-            } else if (!cursor.isLast()) {
-                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
-            }
-            return loadCurrentDeep(cursor, true);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
-    public List<DepartmentBean> loadAllDeepFromCursor(Cursor cursor) {
-        int count = cursor.getCount();
-        List<DepartmentBean> list = new ArrayList<DepartmentBean>(count);
-        
-        if (cursor.moveToFirst()) {
-            if (identityScope != null) {
-                identityScope.lock();
-                identityScope.reserveRoom(count);
-            }
-            try {
-                do {
-                    list.add(loadCurrentDeep(cursor, false));
-                } while (cursor.moveToNext());
-            } finally {
-                if (identityScope != null) {
-                    identityScope.unlock();
-                }
-            }
-        }
-        return list;
-    }
-    
-    protected List<DepartmentBean> loadDeepAllAndCloseCursor(Cursor cursor) {
-        try {
-            return loadAllDeepFromCursor(cursor);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-
-    /** A raw-style query where you can pass any WHERE clause and arguments. */
-    public List<DepartmentBean> queryDeep(String where, String... selectionArg) {
-        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
-        return loadDeepAllAndCloseCursor(cursor);
-    }
- 
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
@@ -34,6 +35,7 @@ import zzh.com.haooa.greenDao.UserInfoBeanDao;
 public class UserInfoActivity extends Activity {
     private EaseTitleBar userinfo_titleBar;
     private TextView tv_hxUsername, tv_department;
+    private EditText et_userinfo_nick, et_userinfo_sex, et_userinfo_phone, et_userinfo_mail, et_userinfo_address;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +58,12 @@ public class UserInfoActivity extends Activity {
         });
         tv_hxUsername = findViewById(R.id.tv_userinfo_name);
         tv_department = findViewById(R.id.tv_userinfo_department);
+
+        et_userinfo_nick = findViewById(R.id.et_userinfo_nick);
+        et_userinfo_sex = findViewById(R.id.et_userinfo_sex);
+        et_userinfo_phone = findViewById(R.id.et_userinfo_phone);
+        et_userinfo_mail = findViewById(R.id.et_userinfo_mail);
+        et_userinfo_address = findViewById(R.id.et_userinfo_address);
     }
 
     private void initDatas() {
@@ -92,19 +100,19 @@ public class UserInfoActivity extends Activity {
                     userInfoBean.setPhone(myUser.getPhone());
                     userInfoBean.setMail(myUser.getMail());
 
-                        UserInfoDAO.init().deleteAll();
-                        Log.d("TAG", "userInfoBean: " + userInfoBean.toString());
-                        UserInfoDAO.init().addUser(userInfoBean);
-                        //从服务器获取部门id对应的名字并保存
-                        new DepartmentDAO().getDepartmentByID(myUser.getDepartmentID(), new BmobStringCallBack() {
-                            @Override
-                            public void getName(String name, BmobException e) {
-                                if (e == null) {
-                                    userInfoBean.setDepartmentName(name);
-                                    UserInfoDAO.init().updateUser(userInfoBean);
-                                }
+                    UserInfoDAO.init().deleteAll();
+                    Log.d("TAG", "userInfoBean: " + userInfoBean.toString());
+                    UserInfoDAO.init().addUser(userInfoBean);
+                    //从服务器获取部门id对应的名字并保存
+                    new DepartmentDAO().getDepartmentByID(myUser.getDepartmentID(), new BmobStringCallBack() {
+                        @Override
+                        public void getName(String name, BmobException e) {
+                            if (e == null) {
+                                userInfoBean.setDepartmentName(name);
+                                UserInfoDAO.init().updateUser(userInfoBean);
                             }
-                        });
+                        }
+                    });
 
                 } else {
                     ToastUtils.showToast(UserInfoActivity.this, "初始化用户信息失败,请检查网络是否连接");
@@ -115,4 +123,25 @@ public class UserInfoActivity extends Activity {
     }
 
 
+    //修改资料按钮
+    public void editInfo(View view) {
+        editInfo(true);
+    }
+
+    //打开可编辑
+    private void editInfo(boolean edit) {
+        et_userinfo_nick.setEnabled(edit);
+        et_userinfo_sex.setEnabled(edit);
+        et_userinfo_phone.setEnabled(edit);
+        et_userinfo_mail.setEnabled(edit);
+        et_userinfo_address.setEnabled(edit);
+    }
+
+
+
+    //保存资料
+    // TODO: 2018/5/23 完成保存资料逻辑
+    public void saveInfo(View view) {
+        editInfo(false);
+    }
 }

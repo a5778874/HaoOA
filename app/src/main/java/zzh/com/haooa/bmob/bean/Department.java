@@ -9,6 +9,15 @@ import cn.bmob.v3.BmobObject;
 public class Department extends BmobObject{
     String departmentID;
     String departmentName;
+    String leaderID;
+
+    public String getLeaderID() {
+        return leaderID;
+    }
+
+    public void setLeaderID(String leaderID) {
+        this.leaderID = leaderID;
+    }
 
     public String getDepartmentID() {
         return departmentID;

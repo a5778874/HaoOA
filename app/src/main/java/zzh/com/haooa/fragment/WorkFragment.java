@@ -17,6 +17,7 @@ import zzh.com.haooa.EventBus.LoginEvent;
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ToastUtils;
 import zzh.com.haooa.activity.MainActivity;
+import zzh.com.haooa.activity.leave.LeaveApplyActivity;
 import zzh.com.haooa.activity.newsActivity.NewsActivity;
 import zzh.com.haooa.activity.notify.NotifyActivity;
 
@@ -81,31 +82,35 @@ public class WorkFragment extends Fragment implements View.OnClickListener{
                 gotoNewsActivity();
                 break;
             case R.id.tv_leave:
-                ToastUtils.showToast(getActivity(),"此功能待开发！");
+                gotoLeaveActivity();
                 break;
             case R.id.tv_goout:
-                ToastUtils.showToast(getActivity(),"此功能待开发！");
+                ToastUtils.showToast(getActivity(),"出差申请功能待开发！");
                 break;
             case R.id.tv_schedule:
-                ToastUtils.showToast(getActivity(),"此功能待开发！");
+                ToastUtils.showToast(getActivity(),"日程表功能待开发！");
                 break;
             case R.id.tv_vote:
-                ToastUtils.showToast(getActivity(),"此功能待开发！");
+                ToastUtils.showToast(getActivity(),"投票功能待开发！");
                 break;
             case R.id.tv_todo:
-                ToastUtils.showToast(getActivity(),"此功能待开发！");
+                ToastUtils.showToast(getActivity(),"待办功能待开发！");
                 break;
             case R.id.tv_diary:
-                ToastUtils.showToast(getActivity(),"此功能待开发！");
+                ToastUtils.showToast(getActivity(),"日记功能待开发！");
                 break;
             case R.id.tv_sign:
-                ToastUtils.showToast(getActivity(),"此功能待开发！");
+                ToastUtils.showToast(getActivity(),"签到功能待开发！");
                 break;
             case R.id.tv_more:
-                ToastUtils.showToast(getActivity(),"此功能待开发！");
+                ToastUtils.showToast(getActivity(),"添加功能待开发！");
                 break;
         }
 
+    }
+
+    private void gotoLeaveActivity() {
+        startActivity(new Intent(getActivity(), LeaveApplyActivity.class));
     }
 
     private void gotoNotifyActivity() {

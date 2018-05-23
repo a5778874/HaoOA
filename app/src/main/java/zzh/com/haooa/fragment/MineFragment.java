@@ -40,7 +40,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private static CircleImageView civ_userhead;
     private static TextView mine_name;
     private Button bt_exitLogin;
-    private RelativeLayout rl_mine_userinfo;
+    private RelativeLayout rl_mine_userinfo, rl_mine_role, rl_mine_setting, rl_mine_about;
     private View view = null;
 
 
@@ -71,8 +71,18 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
-        rl_mine_userinfo=view.findViewById(R.id.rl_mine_userinfo);
+        rl_mine_userinfo = view.findViewById(R.id.rl_mine_userinfo);
         rl_mine_userinfo.setOnClickListener(this);
+
+        rl_mine_role = view.findViewById(R.id.rl_mine_role);
+        rl_mine_role.setOnClickListener(this);
+
+        rl_mine_about = view.findViewById(R.id.rl_mine_about);
+        rl_mine_about.setOnClickListener(this);
+
+        rl_mine_setting = view.findViewById(R.id.rl_mine_setting);
+        rl_mine_setting.setOnClickListener(this);
+
         mine_name = view.findViewById(R.id.mine_name);
         civ_userhead = view.findViewById(R.id.civ_userhead);
         civ_userhead.setOnClickListener(MineFragment.this);
@@ -126,6 +136,20 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.rl_mine_userinfo:
                 //跳转到个人资料页面
                 goToUserinfoActivity();
+                break;
+
+            case R.id.rl_mine_role:
+                //角色管理
+                ToastUtils.showToast(getActivity(), "角色管理功能待开发...");
+                break;
+            case R.id.rl_mine_setting:
+                //设置
+                ToastUtils.showToast(getActivity(), "设置功能待开发...");
+                break;
+
+            case R.id.rl_mine_about:
+                //关于
+                ToastUtils.showToast(getActivity(), "关于功能待开发...");
                 break;
 
             case R.id.mine_exit_login:

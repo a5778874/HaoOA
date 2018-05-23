@@ -25,12 +25,16 @@ import cn.bmob.v3.exception.BmobException;
 import zzh.com.haooa.EventBus.LoginEvent;
 import zzh.com.haooa.MyApplication;
 import zzh.com.haooa.Utils.ToastUtils;
+import zzh.com.haooa.bean.DepartmentBean;
 import zzh.com.haooa.bean.UserInfoBean;
+import zzh.com.haooa.bmob.bean.Department;
 import zzh.com.haooa.bmob.bean.user;
 import zzh.com.haooa.bmob.dao.BmobStringCallBack;
+import zzh.com.haooa.bmob.dao.DepartmentCallBack;
 import zzh.com.haooa.bmob.dao.DepartmentDAO;
 import zzh.com.haooa.bmob.dao.UserCallBack;
 import zzh.com.haooa.bmob.dao.UserDAO;
+import zzh.com.haooa.dao.DepartmentDao;
 import zzh.com.haooa.dao.UserAccountDAO;
 import zzh.com.haooa.dao.UserInfoDAO;
 import zzh.com.haooa.fragment.ContactsFragment;
@@ -128,8 +132,35 @@ public class MainActivity extends FragmentActivity {
     private void initUserInfo() {
         //初始化用户资料
         final String hxUsername = EMClient.getInstance().getCurrentUser();
-        Log.d("TAG", "MainActivity getUser: " + hxUsername);
-        //获取服务器资料
+
+        //获取服务器所有部门信息
+        new DepartmentDAO().getDepartmentList(new DepartmentCallBack() {
+            @Override
+            public void getDepartmentList(List<Department> list, BmobException e) {
+                DepartmentDao dao = DepartmentDao.init();
+                if (e == null) {
+                    //删除数据库所有
+                    dao.deleteAll();
+                    for (Department department : list) {
+                        //保存到数据库
+                        DepartmentBean departmentBean = new DepartmentBean();
+                        departmentBean.setDepartmentID(department.getDepartmentID());
+                        departmentBean.setDepartmentName(department.getDepartmentName());
+                        departmentBean.setLeaderID(department.getLeaderID());
+                        departmentBean.setCreateTime(department.getCreatedAt());
+                        departmentBean.setUpdateTime(department.getUpdatedAt());
+                        long l=dao.addDepartment(departmentBean);
+                    }
+
+
+                } else {
+                    Log.d("TAG", "getDepartmentList BmobException: " + e.toString());
+                }
+            }
+        });
+
+
+        //获取服务器用户信息资料
         new UserDAO().getUserInfo(hxUsername, new UserCallBack() {
             @Override
             public void getUser(List<user> list, BmobException e) {
@@ -155,9 +186,8 @@ public class MainActivity extends FragmentActivity {
                         localUser = user.get(0).getHxUsername();
 
                     //判断是否替换新用户的信息，保证本地数据库只保留一条当前用户的数据
-                    if (!localUser.equals(hxUsername)) {
+//                    if (!localUser.equals(hxUsername)) {
                         UserInfoDAO.init().deleteAll();
-                        Log.d("TAG", "userInfoBean: " + userInfoBean.toString());
                         UserInfoDAO.init().addUser(userInfoBean);
                         //从服务器获取部门id对应的名字并保存
                         new DepartmentDAO().getDepartmentByID(myUser.getDepartmentID(), new BmobStringCallBack() {
@@ -169,7 +199,7 @@ public class MainActivity extends FragmentActivity {
                                 }
                             }
                         });
-                    }
+//                    }
 
 
                 } else {
