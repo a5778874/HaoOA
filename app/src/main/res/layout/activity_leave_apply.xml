@@ -6,13 +6,14 @@
     android:orientation="vertical">
 
     <com.hyphenate.easeui.widget.EaseTitleBar
-        android:id="@+id/reg_titleBar"
+        android:id="@+id/leave_titleBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@color/easeTitleBarBackground"
         android:padding="10dp"
         app:titleBarLeftImage="@drawable/btn_titlebarback_selector"
+        app:titleBarRightImage="@drawable/history"
         app:titleBarTitle="请假申请" />
 
     <ScrollView
@@ -101,6 +102,7 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/btn_login_selector"
                 android:text="提交申请"
+                android:onClick="submit"
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
         </LinearLayout>

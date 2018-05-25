@@ -211,7 +211,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                                 mine_name.setText("请登录");
                                 //退出后不能点击退出按钮
                                 bt_exitLogin.setClickable(false);
+                                startActivity(new Intent(getActivity(), LoginActivity.class));
                                 ToastUtils.showToast(getActivity(), "退出成功");
+                                getActivity().finish();
                             }
                         });
                     }

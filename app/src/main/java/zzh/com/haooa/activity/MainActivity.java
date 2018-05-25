@@ -29,13 +29,12 @@ import zzh.com.haooa.bean.DepartmentBean;
 import zzh.com.haooa.bean.UserInfoBean;
 import zzh.com.haooa.bmob.bean.Department;
 import zzh.com.haooa.bmob.bean.user;
-import zzh.com.haooa.bmob.dao.BmobStringCallBack;
-import zzh.com.haooa.bmob.dao.DepartmentCallBack;
-import zzh.com.haooa.bmob.dao.DepartmentDAO;
-import zzh.com.haooa.bmob.dao.UserCallBack;
-import zzh.com.haooa.bmob.dao.UserDAO;
+import zzh.com.haooa.bmob.api.BmobStringCallBack;
+import zzh.com.haooa.bmob.api.DepartmentCallBack;
+import zzh.com.haooa.bmob.api.DepartmentApi;
+import zzh.com.haooa.bmob.api.UserCallBack;
+import zzh.com.haooa.bmob.api.UserApi;
 import zzh.com.haooa.dao.DepartmentDao;
-import zzh.com.haooa.dao.UserAccountDAO;
 import zzh.com.haooa.dao.UserInfoDAO;
 import zzh.com.haooa.fragment.ContactsFragment;
 import zzh.com.haooa.bean.TabSpecBean;
@@ -43,7 +42,6 @@ import zzh.com.haooa.fragment.MessageFragment;
 import zzh.com.haooa.fragment.MineFragment;
 import zzh.com.haooa.R;
 import zzh.com.haooa.fragment.WorkFragment;
-import zzh.com.haooa.greenDao.UserInfoBeanDao;
 
 public class MainActivity extends FragmentActivity {
     private FrameLayout tabContent;
@@ -134,7 +132,7 @@ public class MainActivity extends FragmentActivity {
         final String hxUsername = EMClient.getInstance().getCurrentUser();
 
         //获取服务器所有部门信息
-        new DepartmentDAO().getDepartmentList(new DepartmentCallBack() {
+        new DepartmentApi().getDepartmentList(new DepartmentCallBack() {
             @Override
             public void getDepartmentList(List<Department> list, BmobException e) {
                 DepartmentDao dao = DepartmentDao.init();
@@ -161,7 +159,7 @@ public class MainActivity extends FragmentActivity {
 
 
         //获取服务器用户信息资料
-        new UserDAO().getUserInfo(hxUsername, new UserCallBack() {
+        new UserApi().getUserInfo(hxUsername, new UserCallBack() {
             @Override
             public void getUser(List<user> list, BmobException e) {
                 if (e == null) {
@@ -190,7 +188,7 @@ public class MainActivity extends FragmentActivity {
                         UserInfoDAO.init().deleteAll();
                         UserInfoDAO.init().addUser(userInfoBean);
                         //从服务器获取部门id对应的名字并保存
-                        new DepartmentDAO().getDepartmentByID(myUser.getDepartmentID(), new BmobStringCallBack() {
+                        new DepartmentApi().getDepartmentByID(myUser.getDepartmentID(), new BmobStringCallBack() {
                             @Override
                             public void getName(String name, BmobException e) {
                                 if (e == null) {

@@ -1,4 +1,4 @@
-package zzh.com.haooa.bmob.dao;
+package zzh.com.haooa.bmob.api;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import zzh.com.haooa.bmob.bean.Notify;
  * Created by ZZH on 2018/4/6.
  */
 
-public class NotifyDAO {
+public class NotifyApi {
     //查询全部通知
     public void getNotifyList(final NotifyCallBack notifyCallBack){
         ThreadPoolUtils.getInstance().getGlobalThreadPool().execute(new Runnable() {

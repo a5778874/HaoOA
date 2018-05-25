@@ -93,8 +93,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     //登录
     private void login() {
         // 1 获取输入的用户名和密码
-        final String loginName = loginUsername.getText().toString();
-        final String loginPwd = loginPassword.getText().toString();
+        final String loginName = loginUsername.getText().toString().trim();
+        final String loginPwd = loginPassword.getText().toString().trim();
 
         // 2 校验输入的用户名和密码
         if (TextUtils.isEmpty(loginName) || TextUtils.isEmpty(loginPwd)) {

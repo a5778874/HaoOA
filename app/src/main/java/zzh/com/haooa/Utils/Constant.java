@@ -50,4 +50,9 @@ public class Constant {
     public static final String CONTACT_INVITE_CHANGED = "contact_invite_changed";// 联系人邀请信息变化的广播
     public static final String GROUP_INVITE_CHANGED = "group_invite_changed";// 群邀请信息变化的广播
 
+
+    //请假申请状态
+    public static final int APPLYING = 0;   //待审批
+    public static final int APPLY_SUCCESS = 1;  //同意
+    public static final int APPLY_FAILURE = -1; //不同意
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/ll_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp">
+
+        <TextView
+            android:id="@+id/tv_item_record_starttime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018-5-25 10:03"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 直到 "
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_item_record_endtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018-5-26 10:03"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="状态: " />
+
+        <TextView
+            android:id="@+id/tv_item_record_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="审核中" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_item_record_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_date"
+        android:layout_margin="10dp"
+        android:text="请假请假"
+        android:textSize="18sp" />
+</RelativeLayout>

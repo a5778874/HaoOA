@@ -1,4 +1,4 @@
-package zzh.com.haooa.bmob.dao;
+package zzh.com.haooa.bmob.api;
 
 import java.util.List;
 

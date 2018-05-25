@@ -24,17 +24,12 @@ import java.util.List;
 import cn.bmob.v3.exception.BmobException;
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ToastUtils;
-import zzh.com.haooa.activity.newsActivity.AddNewsActivity;
-import zzh.com.haooa.activity.newsActivity.NewsActivity;
-import zzh.com.haooa.activity.newsActivity.ShowNewsActivity;
 import zzh.com.haooa.adapter.NewsItemAdapter;
 import zzh.com.haooa.adapter.NotifyItemAdapter;
 import zzh.com.haooa.bmob.bean.Notify;
-import zzh.com.haooa.bmob.bean.news;
-import zzh.com.haooa.bmob.dao.NotifyCallBack;
-import zzh.com.haooa.bmob.dao.NotifyDAO;
+import zzh.com.haooa.bmob.api.NotifyCallBack;
+import zzh.com.haooa.bmob.api.NotifyApi;
 import zzh.com.haooa.dao.UserInfoDAO;
-import zzh.com.haooa.greenDao.UserInfoBeanDao;
 
 /**
  * Created by ZZH on 2018/4/6.
@@ -155,7 +150,7 @@ public class NotifyActivity extends Activity {
         String departmentID = UserInfoDAO.init().getUser().get(0).getDepartmentID();
 
         //2.只加载自己部门的通知
-        new NotifyDAO().getDepartmentNotifyList(departmentID,new NotifyCallBack() {
+        new NotifyApi().getDepartmentNotifyList(departmentID,new NotifyCallBack() {
             @Override
             public void getNotifyList(List<Notify> list, BmobException e) {
                 if (e == null) {

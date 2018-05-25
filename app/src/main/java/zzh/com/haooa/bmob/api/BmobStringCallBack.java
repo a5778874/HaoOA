@@ -1,9 +1,6 @@
-package zzh.com.haooa.bmob.dao;
-
-import java.util.List;
+package zzh.com.haooa.bmob.api;
 
 import cn.bmob.v3.exception.BmobException;
-import zzh.com.haooa.bmob.bean.Department;
 
 /**
  * Created by ZZH on 2018/4/6.

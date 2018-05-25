@@ -1,4 +1,4 @@
-package zzh.com.haooa.bmob.dao;
+package zzh.com.haooa.bmob.api;
 
 import java.util.List;
 
@@ -7,13 +7,12 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.bmob.bean.Department;
-import zzh.com.haooa.bmob.bean.Notify;
 
 /**
  * Created by ZZH on 2018/4/6.
  */
 
-public class DepartmentDAO {
+public class DepartmentApi {
     //查询全部部门
     public void getDepartmentList(final DepartmentCallBack departmentCallBack) {
         ThreadPoolUtils.getInstance().getGlobalThreadPool().execute(new Runnable() {

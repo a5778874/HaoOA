@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,22 +15,15 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 import zzh.com.haooa.R;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.Utils.ToastUtils;
-import zzh.com.haooa.activity.newsActivity.AddNewsActivity;
-import zzh.com.haooa.activity.newsActivity.NewsActivity;
-import zzh.com.haooa.activity.newsActivity.ShowNewsActivity;
-import zzh.com.haooa.adapter.NewsItemAdapter;
 import zzh.com.haooa.bmob.bean.Notify;
-import zzh.com.haooa.bmob.bean.news;
-import zzh.com.haooa.bmob.dao.BmobStringCallBack;
-import zzh.com.haooa.bmob.dao.DepartmentDAO;
-import zzh.com.haooa.dao.UserInfoDAO;
+import zzh.com.haooa.bmob.api.BmobStringCallBack;
+import zzh.com.haooa.bmob.api.DepartmentApi;
 
 /**
  * Created by ZZH on 2018/4/7.
@@ -109,7 +99,7 @@ public class ShowNotifyActivity extends Activity implements View.OnClickListener
             notify_department.setText("所有");
 
         } else {
-            new DepartmentDAO().getDepartmentByID(notifyDetails.getDepartmentID(), new BmobStringCallBack() {
+            new DepartmentApi().getDepartmentByID(notifyDetails.getDepartmentID(), new BmobStringCallBack() {
                 @Override
                 public void getName(String name, BmobException e) {
                     if (e == null) {
