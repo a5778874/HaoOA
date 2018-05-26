@@ -248,6 +248,11 @@ public class ContactsFragment extends EaseContactListFragment {
 
 
 
+
+
+
+
+
     // 从环信服务器获取所有的联系人信息
     private void getContactFromHxServer() {
         ThreadPoolUtils.getInstance().getGlobalThreadPool().execute(new Runnable() {

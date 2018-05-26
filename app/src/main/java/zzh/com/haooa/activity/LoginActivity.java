@@ -62,8 +62,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     private void initData() {
         //判断是否从欢迎页面进来还是从主页面进来登录
-        Intent it=getIntent();
-         fromWelcomeActivity=it.getBooleanExtra("fromWelcomeActivity",false);
+        Intent it = getIntent();
+        fromWelcomeActivity = it.getBooleanExtra("fromWelcomeActivity", false);
         //注册EventBus广播，用来接收注册用户信息
         EventBus.getDefault().register(LoginActivity.this);
     }
@@ -119,7 +119,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 //清空上一个登录用户的好友列表数据库信息
                                 UserContactsDAO.init().deleteAll();
                                 //保存登录用户信息到本地
-                                UserAccountTableBean userAccountTableBean=new UserAccountTableBean();
+                                UserAccountTableBean userAccountTableBean = new UserAccountTableBean();
                                 userAccountTableBean.setHxUsername(loginName);
                                 userAccountTableBean.setIsOnline(true);
                                 UserAccountDAO.init().addUser(userAccountTableBean);
@@ -128,10 +128,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 //使用eventBus发送注册的用户名密码到登录界面
                                 EventBus.getDefault().post(new LoginEvent(loginName));
                                 //如果从欢迎页面进来登录的则启动主页面，否则直接结束该页面
-                                if (fromWelcomeActivity){
-                                    Intent it=new Intent(LoginActivity.this,MainActivity.class);
-                                    startActivity(it);
-                                }
+                                // if (fromWelcomeActivity){
+                                Intent it = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(it);
+                                // }
                                 LoginActivity.this.finish();
                             }
                         });

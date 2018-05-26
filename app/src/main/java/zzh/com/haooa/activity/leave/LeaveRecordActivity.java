@@ -26,6 +26,7 @@ import zzh.com.haooa.bmob.api.DepartmentApi;
 import zzh.com.haooa.bmob.api.LeaveApi;
 import zzh.com.haooa.bmob.api.LeaveCallBack;
 import zzh.com.haooa.bmob.bean.Leave;
+import zzh.com.haooa.dao.UserInfoDAO;
 
 /**
  * Created by Administrator on 2018/5/23.
@@ -54,51 +55,60 @@ public class LeaveRecordActivity extends Activity {
     private void initLeaveRecordData() {
         progressBar.setVisibility(View.VISIBLE);
         String userID = EMClient.getInstance().getCurrentUser();
-        new LeaveApi().getLeaveByUser(userID, new LeaveCallBack() {
-            @Override
-            public void getLeaveLists(List<Leave> list, final BmobException e) {
-                Log.d("TAG2", "getLeaveLists: " + list.size());
-                if (e == null) {
-                    //如果有记录则显示列表，没记录显示暂无消息图片
-                    if (list.size() > 0) {
-                        leaveRecordList.clear();
-                        leaveRecordList.addAll(list);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressBar.setVisibility(View.GONE);
-                                iv_noMessage.setVisibility(View.GONE);
-                                rv_leave_record.setVisibility(View.VISIBLE);
-                                rv_leave_record.setAdapter(new LeaveRecordItemAdapter(LeaveRecordActivity.this, leaveRecordList));
-                                rv_leave_record.setLayoutManager(new LinearLayoutManager(LeaveRecordActivity.this, LinearLayoutManager.VERTICAL, false));
-                                rv_leave_record.addItemDecoration(new DividerItemDecoration(LeaveRecordActivity.this, DividerItemDecoration.VERTICAL));
-                            }
-                        });
-                    } else {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressBar.setVisibility(View.GONE);
-                                rv_leave_record.setVisibility(View.GONE);
-                                iv_noMessage.setVisibility(View.VISIBLE);
+        String currentRole = UserInfoDAO.init().getUser().get(0).getDepartmentID();
+        //如果为管理员则加载全部通请假列表,否则只加载自己的请假列表
+        if (currentRole.equals("1005")) {
+            new LeaveApi().getAllLeave(userID, callBack);
+        } else {
+            new LeaveApi().getLeaveByUser(userID, callBack);
+        }
+    }
 
-                            }
-                        });
 
-                    }
-
+    LeaveCallBack callBack = new LeaveCallBack() {
+        @Override
+        public void getLeaveLists(List<Leave> list, final BmobException e) {
+            Log.d("TAG2", "getLeaveLists: " + list.size());
+            if (e == null) {
+                //如果有记录则显示列表，没记录显示暂无消息图片
+                if (list.size() > 0) {
+                    leaveRecordList.clear();
+                    leaveRecordList.addAll(list);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setVisibility(View.GONE);
+                            iv_noMessage.setVisibility(View.GONE);
+                            rv_leave_record.setVisibility(View.VISIBLE);
+                            rv_leave_record.setAdapter(new LeaveRecordItemAdapter(LeaveRecordActivity.this, leaveRecordList));
+                            rv_leave_record.setLayoutManager(new LinearLayoutManager(LeaveRecordActivity.this, LinearLayoutManager.VERTICAL, false));
+                            rv_leave_record.addItemDecoration(new DividerItemDecoration(LeaveRecordActivity.this, DividerItemDecoration.VERTICAL));
+                        }
+                    });
                 } else {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             progressBar.setVisibility(View.GONE);
-                            ToastUtils.showToast(LeaveRecordActivity.this, "获取数据失败" + e);
+                            rv_leave_record.setVisibility(View.GONE);
+                            iv_noMessage.setVisibility(View.VISIBLE);
+
                         }
                     });
+
                 }
+
+            } else {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                        ToastUtils.showToast(LeaveRecordActivity.this, "获取数据失败" + e);
+                    }
+                });
             }
-        });
-    }
+        }
+    };
 
     private void initView() {
         progressBar = findViewById(R.id.pb_leave_record);

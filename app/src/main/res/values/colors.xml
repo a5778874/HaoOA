@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3490FF</color>
+    <color name="colorPrimaryPress">#034ca4</color>
     <color name="colorPrimaryDark">#6074f7</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorRedPress">#b70202</color>
     <color name="tabTextchecked">#38ADFF</color>
     <color name="tabTextunchecked">#636364</color>
     <color name="windowBackground">#F6F6F6</color>
