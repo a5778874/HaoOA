@@ -1,6 +1,8 @@
 package zzh.com.haooa.Utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -13,5 +15,13 @@ public class DateUtils {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String format = simpleDateFormat.format(date);
         return format;
+    }
+
+
+    // 日期转毫秒
+    public static long DateTomillisecond(String date) throws ParseException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date));
+        return calendar.getTimeInMillis();
     }
 }

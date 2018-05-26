@@ -12,10 +12,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.cjj.MaterialRefreshLayout;
+import com.cjj.MaterialRefreshListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
@@ -33,6 +36,7 @@ import zzh.com.haooa.dao.UserInfoDAO;
  */
 
 public class LeaveRecordActivity extends Activity {
+    private MaterialRefreshLayout refreshLayout;
     private ProgressBar progressBar;
     private EaseTitleBar easeTitleBar;
     private ImageView iv_noMessage;
@@ -74,6 +78,7 @@ public class LeaveRecordActivity extends Activity {
                 if (list.size() > 0) {
                     leaveRecordList.clear();
                     leaveRecordList.addAll(list);
+                    Collections.sort(leaveRecordList); //对集合按最新创建顺序排序
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -90,7 +95,7 @@ public class LeaveRecordActivity extends Activity {
                         @Override
                         public void run() {
                             progressBar.setVisibility(View.GONE);
-                            rv_leave_record.setVisibility(View.GONE);
+                          //  rv_leave_record.setVisibility(View.GONE);
                             iv_noMessage.setVisibility(View.VISIBLE);
 
                         }
@@ -114,6 +119,15 @@ public class LeaveRecordActivity extends Activity {
         progressBar = findViewById(R.id.pb_leave_record);
         iv_noMessage = findViewById(R.id.iv_leave_record_no_message);
         rv_leave_record = findViewById(R.id.rv_leave_record);
+        refreshLayout=findViewById(R.id.leave_record_refresh);
+        refreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
+            @Override
+            public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
+                initLeaveRecordData();
+                //刷新完成
+                refreshLayout.finishRefresh();
+            }
+        });
 
         easeTitleBar = findViewById(R.id.leave_record_titleBar);
         easeTitleBar.setLeftLayoutClickListener(new View.OnClickListener() {

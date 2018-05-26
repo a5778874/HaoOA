@@ -43,7 +43,7 @@
                     android:id="@+id/et_leave_starttime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.8"
+                    android:layout_weight="1.5"
                     android:clickable="true"
                     android:focusableInTouchMode="false"
                     android:inputType="none"
@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusableInTouchMode="false"
-                    android:layout_weight="1.8"
+                    android:layout_weight="1.5"
                     android:hint="请选择结束时间"
                     android:textSize="20sp" />
             </LinearLayout>

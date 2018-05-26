@@ -1,12 +1,18 @@
 package zzh.com.haooa.bmob.bean;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import java.text.ParseException;
+
 import cn.bmob.v3.BmobObject;
+import zzh.com.haooa.Utils.DateUtils;
 
 /**
  * Created by Administrator on 2018/5/23.
  */
 
-public class Leave extends BmobObject {
+public class Leave extends BmobObject implements Comparable<Leave>{
     private String userID;
     private String startTime;
     private String endTime;
@@ -21,8 +27,6 @@ public class Leave extends BmobObject {
     public void setUserID(String userID) {
         this.userID = userID;
     }
-
-
 
 
     public String getStartTime() {
@@ -63,5 +67,18 @@ public class Leave extends BmobObject {
 
     public void setApplyStatus(int applyStatus) {
         this.applyStatus = applyStatus;
+    }
+
+
+    //让集合按数据的最新创建顺序在前排序
+    @Override
+    public int compareTo(@NonNull Leave o) {
+        int i=0;
+        try {
+            i= (int) (DateUtils.DateTomillisecond(o.getCreatedAt())-DateUtils.DateTomillisecond(this.getCreatedAt()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return i;
     }
 }
