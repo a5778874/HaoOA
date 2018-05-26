@@ -63,6 +63,5 @@ public class LeaveApi {
                 bmobCallBack.getBmobException(e);
             }
         });
-
     }
 }

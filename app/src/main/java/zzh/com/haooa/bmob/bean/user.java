@@ -1,13 +1,19 @@
 package zzh.com.haooa.bmob.bean;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import java.text.ParseException;
+
 import cn.bmob.v3.BmobObject;
+import zzh.com.haooa.Utils.DateUtils;
 
 /**
  * Bmob云数据库操作bean类
  * Created by ZZH on 2018/2/3.
  */
 
-public class user extends BmobObject{
+public class user extends BmobObject implements Comparable<user> {
     private String hxUsername;// 环信用户名
     private String nick;// 用户的昵称
     private String sex;//性别
@@ -19,7 +25,7 @@ public class user extends BmobObject{
     private int role;//角色
 
     //设置Bmob关联表名
-    public user(){
+    public user() {
         this.setTableName("user");
     }
 
@@ -93,5 +99,23 @@ public class user extends BmobObject{
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+
+    //让集合按数据的最新创建顺序在前排序
+    @Override
+    public int compareTo(@NonNull user o) {
+        int i = 0;
+        try {
+            long l = DateUtils.DateTomillisecond(o.getCreatedAt()) - DateUtils.DateTomillisecond(this.getCreatedAt());
+            if (l > 0) {
+                i = 1;
+            } else {
+                i = -1;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return i;
     }
 }

@@ -55,4 +55,8 @@ public class Constant {
     public static final int APPLYING = 0;   //待审批
     public static final int APPLY_SUCCESS = 1;  //同意
     public static final int APPLY_FAILURE = -1; //不同意
+
+    //角色相关
+    public static final String ROLE_ADMIN = "1005";
+    public static final String ROLE_NONE = "1000";
 }

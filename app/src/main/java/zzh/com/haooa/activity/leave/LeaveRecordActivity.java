@@ -23,6 +23,7 @@ import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
 import zzh.com.haooa.R;
+import zzh.com.haooa.Utils.Constant;
 import zzh.com.haooa.Utils.ToastUtils;
 import zzh.com.haooa.adapter.LeaveRecordItemAdapter;
 import zzh.com.haooa.bmob.api.DepartmentApi;
@@ -61,7 +62,7 @@ public class LeaveRecordActivity extends Activity {
         String userID = EMClient.getInstance().getCurrentUser();
         String currentRole = UserInfoDAO.init().getUser().get(0).getDepartmentID();
         //如果为管理员则加载全部通请假列表,否则只加载自己的请假列表
-        if (currentRole.equals("1005")) {
+        if (currentRole.equals(Constant.ROLE_ADMIN)) {
             new LeaveApi().getAllLeave(userID, callBack);
         } else {
             new LeaveApi().getLeaveByUser(userID, callBack);

@@ -75,7 +75,12 @@ public class Leave extends BmobObject implements Comparable<Leave>{
     public int compareTo(@NonNull Leave o) {
         int i=0;
         try {
-            i= (int) (DateUtils.DateTomillisecond(o.getCreatedAt())-DateUtils.DateTomillisecond(this.getCreatedAt()));
+            long l = DateUtils.DateTomillisecond(o.getCreatedAt()) - DateUtils.DateTomillisecond(this.getCreatedAt());
+            if (l > 0) {
+                i = 1;
+            } else {
+                i = -1;
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }

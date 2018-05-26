@@ -24,13 +24,16 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import zzh.com.haooa.EventBus.LoginEvent;
+import zzh.com.haooa.Utils.Constant;
 import zzh.com.haooa.Utils.ThreadPoolUtils;
 import zzh.com.haooa.Utils.ToastUtils;
 import zzh.com.haooa.activity.LoginActivity;
 import zzh.com.haooa.R;
+import zzh.com.haooa.activity.RoleManagerActivity;
 import zzh.com.haooa.activity.UserInfoActivity;
 import zzh.com.haooa.bean.UserAccountTableBean;
 import zzh.com.haooa.dao.UserAccountDAO;
+import zzh.com.haooa.dao.UserInfoDAO;
 
 /**
  * Created by ZZH on 2018/1/25.
@@ -139,8 +142,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.rl_mine_role:
-                //角色管理
-                ToastUtils.showToast(getActivity(), "角色管理功能待开发...");
+                //获取当前用户是否是管理员，管理员能进入角色管理页面
+                String roleID = UserInfoDAO.init().getUser().get(0).getDepartmentID();
+                if (roleID.equals(Constant.ROLE_ADMIN))
+                    goToRoleManagerActivity();
+                else
+                    ToastUtils.showToast(getActivity(), "无权限进入");
                 break;
             case R.id.rl_mine_setting:
                 //设置
@@ -149,7 +156,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
             case R.id.rl_mine_about:
                 //关于
-                ToastUtils.showToast(getActivity(), "关于功能待开发...");
+                new AlertDialog.Builder(getContext()).setTitle("关于").setMessage("版本：开发版\n开发者：钟子豪\nfosu20140310219").setNegativeButton("知道了", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
                 break;
 
             case R.id.mine_exit_login:
@@ -160,6 +172,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     private void goToUserinfoActivity() {
         startActivity(new Intent(getActivity(), UserInfoActivity.class));
+    }
+
+    private void goToRoleManagerActivity() {
+        startActivity(new Intent(getActivity(), RoleManagerActivity.class));
     }
 
     @Override

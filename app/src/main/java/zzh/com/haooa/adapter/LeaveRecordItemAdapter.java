@@ -131,7 +131,7 @@ public class LeaveRecordItemAdapter extends RecyclerView.Adapter<LeaveRecordItem
 
         //如果为管理员，则显示管理员相应的布局
         String currentRole = UserInfoDAO.init().getUser().get(0).getDepartmentID();
-        if (currentRole.equals("1005")) {
+        if (currentRole.equals(Constant.ROLE_ADMIN)) {
             holder.rl_admin_area.setVisibility(View.VISIBLE);
 
             //如果为假条申请中，显示处理按钮组

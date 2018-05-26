@@ -57,6 +57,8 @@
 
         <activity android:name=".activity.ChatActivity" />
 
+        <activity android:name=".activity.RoleManagerActivity" />
+
         <activity android:name=".activity.newsActivity.NewsActivity" />
 
         <activity android:name=".activity.newsActivity.AddNewsActivity" />
