@@ -4,12 +4,10 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
-import zzh.com.haooa.greenDao.DaoSession;
-import zzh.com.haooa.greenDao.DepartmentBeanDao;
-import zzh.com.haooa.greenDao.UserInfoBeanDao;
+
 
 /**
+ *
  * Created by ZZH on 2018/2/3.
  * 保存登录的用户信息
  */
