@@ -119,5 +119,22 @@ public class UserInfoBean {
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
-  
+
+    @Override
+    public String toString() {
+        return "UserInfoBean{" +
+                "HxUsername='" + HxUsername + '\'' +
+                ", nick='" + nick + '\'' +
+                ", sex='" + sex + '\'' +
+                ", head='" + head + '\'' +
+                ", departmentID='" + departmentID + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", mail='" + mail + '\'' +
+                ", address='" + address + '\'' +
+                ", role=" + role +
+                ", createTime='" + createTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                '}';
+    }
 }

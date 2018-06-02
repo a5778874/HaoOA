@@ -110,7 +110,7 @@ public class NotifyActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //判断是否有权限发表公告，1为有权限，0为无权限
-                Log.d("TAG", "onClick: "+UserInfoDAO.init().getUser().get(0).getRole());
+                Log.d("TAG", "onClick: " + UserInfoDAO.init().getUser().get(0).getRole());
                 if (UserInfoDAO.init().getUser().get(0).getRole() == 1) {
                     Intent it = new Intent(NotifyActivity.this, AddNotifyActivity.class);
                     it.putExtra("NotifyStatus", AddNotifyActivity.STATUS_ADD_NOTIFY);
@@ -150,36 +150,69 @@ public class NotifyActivity extends Activity {
         String departmentID = UserInfoDAO.init().getUser().get(0).getDepartmentID();
 
         //2.只加载自己部门的通知
-        new NotifyApi().getDepartmentNotifyList(departmentID,new NotifyCallBack() {
-            @Override
-            public void getNotifyList(List<Notify> list, BmobException e) {
-                if (e == null) {
-                    //获取成功1
-                    Message message = new Message();
-                    message.what = 1;
-                    message.obj = list;
-                    mHandler.sendMessage(message);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            pb_notifylists.setVisibility(View.GONE);
-                        }
-                    });
-                } else {
-                    //获取失败0
-                    Message message = new Message();
-                    message.what = 0;
-                    message.obj = e.toString();
-                    mHandler.sendMessage(message);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            pb_notifylists.setVisibility(View.GONE);
-                        }
-                    });
+        if (departmentID.equals("1005")) {
+            new NotifyApi().getNotifyList(new NotifyCallBack() {
+                @Override
+                public void getNotifyList(List<Notify> list, BmobException e) {
+                    if (e == null) {
+                        //获取成功1
+                        Message message = new Message();
+                        message.what = 1;
+                        message.obj = list;
+                        mHandler.sendMessage(message);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                pb_notifylists.setVisibility(View.GONE);
+                            }
+                        });
+                    } else {
+                        //获取失败0
+                        Message message = new Message();
+                        message.what = 0;
+                        message.obj = e.toString();
+                        mHandler.sendMessage(message);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                pb_notifylists.setVisibility(View.GONE);
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            new NotifyApi().getDepartmentNotifyList(departmentID, new NotifyCallBack() {
+                @Override
+                public void getNotifyList(List<Notify> list, BmobException e) {
+                    if (e == null) {
+                        //获取成功1
+                        Message message = new Message();
+                        message.what = 1;
+                        message.obj = list;
+                        mHandler.sendMessage(message);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                pb_notifylists.setVisibility(View.GONE);
+                            }
+                        });
+                    } else {
+                        //获取失败0
+                        Message message = new Message();
+                        message.what = 0;
+                        message.obj = e.toString();
+                        mHandler.sendMessage(message);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                pb_notifylists.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                }
+            });
+        }
     }
 
 

@@ -97,6 +97,7 @@ public class AddContactsActivity extends Activity implements View.OnClickListene
                 break;
             case R.id.tv_add_find:
                 String user = et_searchUser.getText().toString();
+                Log.d("TAG", "onClick: find......");
                 if (!TextUtils.isEmpty(user))
                     findUser(user);
                 break;

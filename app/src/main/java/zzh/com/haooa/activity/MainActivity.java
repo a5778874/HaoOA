@@ -147,7 +147,7 @@ public class MainActivity extends FragmentActivity {
                         departmentBean.setLeaderID(department.getLeaderID());
                         departmentBean.setCreateTime(department.getCreatedAt());
                         departmentBean.setUpdateTime(department.getUpdatedAt());
-                        long l=dao.addDepartment(departmentBean);
+                        long l = dao.addDepartment(departmentBean);
                     }
 
 
@@ -175,7 +175,7 @@ public class MainActivity extends FragmentActivity {
                     userInfoBean.setAddress(myUser.getAddress());
                     userInfoBean.setPhone(myUser.getPhone());
                     userInfoBean.setMail(myUser.getMail());
-
+                    userInfoBean.setDepartmentName(DepartmentDao.init().getDepartmentInfoByID(myUser.getDepartmentID()).getDepartmentName());
                     //查询上一次的登录的用户信息
                     List<UserInfoBean> user = UserInfoDAO.init().getUser();
                     String localUser = "";
@@ -185,24 +185,24 @@ public class MainActivity extends FragmentActivity {
 
                     //判断是否替换新用户的信息，保证本地数据库只保留一条当前用户的数据
 //                    if (!localUser.equals(hxUsername)) {
-                        UserInfoDAO.init().deleteAll();
-                        UserInfoDAO.init().addUser(userInfoBean);
-                        //从服务器获取部门id对应的名字并保存
-                        new DepartmentApi().getDepartmentByID(myUser.getDepartmentID(), new BmobStringCallBack() {
-                            @Override
-                            public void getName(String name, BmobException e) {
-                                if (e == null) {
-                                    userInfoBean.setDepartmentName(name);
-                                    UserInfoDAO.init().updateUser(userInfoBean);
-                                }
-                            }
-                        });
+                    UserInfoDAO.init().deleteAll();
+                    UserInfoDAO.init().addUser(userInfoBean);
+                    //从服务器获取部门id对应的名字并保存
+//                        new DepartmentApi().getDepartmentByID(myUser.getDepartmentID(), new BmobStringCallBack() {
+//                            @Override
+//                            public void getName(String name, BmobException e) {
+//                                if (e == null) {
+//                                    userInfoBean.setDepartmentName(name);
+//                                    UserInfoDAO.init().updateUser(userInfoBean);
+//                                }
+//                            }
+//                        });
 //                    }
 
 
                 } else {
-                    ToastUtils.showToast(MainActivity.this, "初始化用户信息失败,请检查网络是否连接");
-                    Log.d("TAG", "MainActivity getUser: " + e.getLocalizedMessage());
+                    ToastUtils.showToast(MainActivity.this, "初始化用户信息失败" + e.getMessage());
+                    Log.d("TAG", "MainActivity getError: " + e.getLocalizedMessage());
                 }
             }
         });

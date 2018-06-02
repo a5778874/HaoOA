@@ -22,6 +22,7 @@ import zzh.com.haooa.bmob.api.BmobStringCallBack;
 import zzh.com.haooa.bmob.api.DepartmentApi;
 import zzh.com.haooa.bmob.api.UserCallBack;
 import zzh.com.haooa.bmob.api.UserApi;
+import zzh.com.haooa.dao.DepartmentDao;
 import zzh.com.haooa.dao.UserInfoDAO;
 
 /**
@@ -67,9 +68,9 @@ public class UserInfoActivity extends Activity {
         //更新资料
         initUserInfo();
         //获取用户资料
-        final UserInfoBean userInfoBean = UserInfoDAO.init().getUser().get(0);
-        tv_hxUsername.setText(userInfoBean.getHxUsername());
-        tv_department.setText(userInfoBean.getDepartmentName());
+//        final UserInfoBean userInfoBean = UserInfoDAO.init().getUser().get(0);
+//        tv_hxUsername.setText(userInfoBean.getHxUsername());
+//        tv_department.setText(userInfoBean.getDepartmentName());
 
 
     }
@@ -84,9 +85,10 @@ public class UserInfoActivity extends Activity {
             @Override
             public void getUser(List<user> list, BmobException e) {
                 if (e == null) {
+                    Log.d("TAG", "UserinfoActiity List<user> size: "+list.size());
                     //保存到本地数据库
-                    user myUser = list.get(0);
-                    Log.d("TAG", "MainActivity getUser: " + myUser.getDepartmentID());
+                    final user myUser = list.get(0);
+                    Log.d("TAG", "Userinfoactivity getDepartmentID: " + myUser.getDepartmentID());
                     final UserInfoBean userInfoBean = new UserInfoBean();
                     userInfoBean.setHxUsername(myUser.getHxUsername());
                     userInfoBean.setDepartmentID(myUser.getDepartmentID());
@@ -96,24 +98,25 @@ public class UserInfoActivity extends Activity {
                     userInfoBean.setAddress(myUser.getAddress());
                     userInfoBean.setPhone(myUser.getPhone());
                     userInfoBean.setMail(myUser.getMail());
+                    final String departmentName = DepartmentDao.init().getDepartmentInfoByID(myUser.getDepartmentID()).getDepartmentName();
+                    Log.d("TAG", "UserInfoActivity getDepartmentID: "+myUser.getDepartmentID()+ ".. departmentName: "+departmentName);
+                    userInfoBean.setDepartmentName(departmentName);
 
                     UserInfoDAO.init().deleteAll();
                     Log.d("TAG", "userInfoBean: " + userInfoBean.toString());
                     UserInfoDAO.init().addUser(userInfoBean);
-                    //从服务器获取部门id对应的名字并保存
-                    new DepartmentApi().getDepartmentByID(myUser.getDepartmentID(), new BmobStringCallBack() {
+//
+                    runOnUiThread(new Runnable() {
                         @Override
-                        public void getName(String name, BmobException e) {
-                            if (e == null) {
-                                userInfoBean.setDepartmentName(name);
-                                UserInfoDAO.init().updateUser(userInfoBean);
-                            }
+                        public void run() {
+                            tv_hxUsername.setText(myUser.getHxUsername());
+                            tv_department.setText(departmentName);
                         }
                     });
 
                 } else {
-                    ToastUtils.showToast(UserInfoActivity.this, "初始化用户信息失败,请检查网络是否连接");
-                    Log.d("TAG", "UserInfoActivity getUser: " + e.getLocalizedMessage());
+                    ToastUtils.showToast(UserInfoActivity.this, "初始化用户信息失败" + e.getMessage());
+                    Log.d("TAG", "UserInfoActivity getLocalizedMessage: " + e.getLocalizedMessage());
                 }
             }
         });
@@ -133,7 +136,6 @@ public class UserInfoActivity extends Activity {
         et_userinfo_mail.setEnabled(edit);
         et_userinfo_address.setEnabled(edit);
     }
-
 
 
     //保存资料
